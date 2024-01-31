@@ -3,6 +3,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { RatingModule } from 'primeng/rating';
 import { ReviewsComponent } from "../components/reviews.component";
 import { SimilarKitsComponent } from "../components/similar-kits.component";
+import { LoginComponent } from "../components/login.component";
 
 @Component({
     selector: 'app-details',
@@ -121,9 +122,10 @@ import { SimilarKitsComponent } from "../components/similar-kits.component";
     </div>
     <app-reviews></app-reviews>
     <app-similar-kits></app-similar-kits>
+    <app-login></app-login>
   `,
     styles: ``,
-    imports: [AvatarModule, RatingModule, ReviewsComponent, SimilarKitsComponent]
+    imports: [AvatarModule, RatingModule, ReviewsComponent, SimilarKitsComponent, LoginComponent]
 })
 export class DetailsComponent {
   tags = ['AI', 'Machine Learning', 'Data Science', 'Computer Vision'];
