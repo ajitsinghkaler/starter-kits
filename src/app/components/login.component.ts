@@ -1,58 +1,60 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { account } from '../appwrite';
-import { ID } from 'appwrite';
+import { FormsModule, NgForm } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule],
   template: `
-    <div>
-  <p>
-    {{ loggedInUser ? 'Logged in as ' + loggedInUser.name : 'Not logged in' }}
-  </p>
-
-  <div>
-    <input type="email" placeholder="Email" [(ngModel)]="email" />
-    <input type="password" placeholder="Password" [(ngModel)]="password" />
-    <input type="text" placeholder="Name" [(ngModel)]="name" />
-
-    <button (click)="login(email, password)">
-      Login
-    </button>
-
-    <button (click)="register(email, password, name)">
-      Register
-    </button>
-
-    <button (click)="logout()">
-      Logout
-    </button>
-  </div>
-</div>
-
+    <div class="row flex-center flex">
+      <div class="col-6 form-widget" aria-live="polite">
+        <h1 class="header">Supabase + Angular</h1>
+        <p class="description">Sign in via magic link with your email below</p>
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-widget">
+          <div>
+            <label for="email">Email</label>
+            <input
+              id="email"
+              class="inputField"
+              type="email"
+              placeholder="Your email"
+            />
+          </div>
+          <div>
+            <button type="submit" class="button block" [disabled]="loading">
+              {{ loading ? 'Loading' : 'Send magic link' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   `,
-  styles: ``
+  styles: ``,
 })
 export class LoginComponent {
-  loggedInUser: any = null;
-  email: string = '';
-  password: string = '';
-  name: string = '';
+  loading = false;
 
-  async login(email: string, password: string) {
-    await account.createEmailSession(email, password);
-    this.loggedInUser = await account.get();
-  }
+  constructor(
+    private readonly auth: AuthService,
+    private readonly formBuilder: FormBuilder
+  ) {}
 
-  async register(email: string, password: string, name: string) {
-    await account.create(ID.unique(), email, password, name);
-    this.login(email, password);
-  }
-
-  async logout() {
-    await account.deleteSession('current');
-    this.loggedInUser = null;
+  async onSubmit(f: NgForm): Promise<void> {
+    try {
+      this.loading = true;
+      const email = f.form.value.email as string;
+      const { error } = await this.auth.signIn(email);
+      if (error) throw error;
+      alert('Check your email for the login link!');
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    } finally {
+      f.form.reset();
+      this.loading = false;
+    }
   }
 }
