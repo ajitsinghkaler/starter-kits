@@ -7,6 +7,23 @@ export const routes: Routes = [
       import('./pages/home.component').then((c) => c.HomeComponent),
   },
   {
+    path:'auth',
+    loadComponent: () =>
+      import('./pages/auth.component').then((c) => c.AuthComponent),
+      children: [
+        {
+          path: 'login',
+          loadComponent: () =>
+            import('./components/login.component').then((c) => c.LoginComponent),
+        },
+        {
+          path: 'signup',
+          loadComponent: () =>
+            import('./components/signup.component').then((c) => c.SignupComponent),
+        },
+      ]
+  },
+  {
     path: 'details',
     loadComponent: () =>
       import('./pages/details.component').then((c) => c.DetailsComponent),

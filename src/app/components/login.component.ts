@@ -1,60 +1,82 @@
 import { Component } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-import { FormBuilder } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
+import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { DividerModule } from 'primeng/divider';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [
+    FormsModule,
+    InputTextModule,
+    PasswordModule,
+    DividerModule,
+    RouterLink,
+  ],
   template: `
-    <div class="row flex-center flex">
-      <div class="col-6 form-widget" aria-live="polite">
-        <h1 class="header">Supabase + Angular</h1>
-        <p class="description">Sign in via magic link with your email below</p>
-        <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-widget">
-          <div>
-            <label for="email">Email</label>
-            <input
-              id="email"
-              class="inputField"
-              type="email"
-              placeholder="Your email"
-            />
-          </div>
-          <div>
-            <button type="submit" class="button block" [disabled]="loading">
-              {{ loading ? 'Loading' : 'Send magic link' }}
-            </button>
-          </div>
-        </form>
+    <form class="block" #f="ngForm">
+      <h2 class="text-center text-2xl py-4	font-semibold">Login to Continue</h2>
+      <div class="flex flex-col gap-2">
+        <label class="text-slate-700 text-sm" for="email">Email</label>
+
+        <input id="email" name="email" placeholder="Email" pInputText ngModel />
       </div>
-    </div>
+      <div class="flex flex-col gap-2 mt-4">
+        <label class="text-slate-700 text-sm" for="password">Password</label>
+        <p-password
+          name="password"
+          id="password"
+          placeholder="Password"
+          ngModel
+          [toggleMask]="true"
+          styleClass="w-full"
+          [inputStyle]="{ width: '100%' }"
+          [feedback]="false"
+        ></p-password>
+      </div>
+      <button
+        class="bg-black text-white rounded shadow py-3 w-full font-medium mt-6 hover:bg-gray-800"
+        type="submit"
+      >
+        Login
+      </button>
+      <div class="flex mt-4">
+        <a
+          class="text-center text-sm hover:underline mx-auto"
+          [routerLink]="['#']"
+          >Forgot Password?</a
+        >
+      </div>
+      <p-divider layout="horizontal" class="flex" [align]="'center'"
+        ><b>OR</b></p-divider
+      >
+      <button
+        class="flex items-center justify-center text-black hover:bg-zinc-100 border shadow rounded py-3 w-full font-medium mt-2"
+      >
+        <span class="pi pi-link mr-3"></span>
+
+        Login with Magic Link
+      </button>
+      <button
+        class="flex items-center justify-center text-black hover:bg-zinc-100 border shadow rounded py-3 w-full font-medium mt-2"
+      >
+        <span class="pi pi-google mr-3"></span>
+
+        Login with Google
+      </button>
+      <div class="flex justify-center mt-4 text-sm items-center">
+        Don't have an account? &nbsp;
+        <a
+          class="hover:underline font-semibold text-base"
+          [routerLink]="['signup']"
+        >
+          Sign Up
+        </a>
+      </div>
+    </form>
   `,
   styles: ``,
 })
-export class LoginComponent {
-  loading = false;
-
-  constructor(
-    private readonly auth: AuthService,
-    private readonly formBuilder: FormBuilder
-  ) {}
-
-  async onSubmit(f: NgForm): Promise<void> {
-    try {
-      this.loading = true;
-      const email = f.form.value.email as string;
-      const { error } = await this.auth.signIn(email);
-      if (error) throw error;
-      alert('Check your email for the login link!');
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
-    } finally {
-      f.form.reset();
-      this.loading = false;
-    }
-  }
-}
+export class LoginComponent {}

@@ -19,6 +19,7 @@ import { HeroTagsComponent } from "./hero-tags.component";
           <input
             class="rounded-full pl-6 w-full"
             type="text"
+            name="search"
             pInputText
             [(ngModel)]="value"
           />

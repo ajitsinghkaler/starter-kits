@@ -1,3 +1,5 @@
+import { Review } from "./review";
+
 export type StarterKit = {
     id: number;
     name: string;
@@ -7,4 +9,5 @@ export type StarterKit = {
     website: string;
     pricing: string;
     rating: number;
+    reviews: Review[];
 }
