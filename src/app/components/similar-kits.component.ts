@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
-import { StarterKitCardsComponent } from "./starter-kit-cards.component";
+import { StarterKitCardsComponent } from './starter-kit-cards.component';
 
 @Component({
-    selector: 'app-similar-kits',
-    standalone: true,
-    template: `
+  selector: 'app-similar-kits',
+  standalone: true,
+  template: `
     <div class="container mx-auto">
-    <h1>Similar Kits</h1>
-    <div class="grid grid-cols-4 gap-6">
-    @for (item of items; track $index) {
-      <app-starter-kit-cards [starterKitData]="item"></app-starter-kit-cards>
-    }
-    </div>
+      <h1>Similar Kits</h1>
+      <div class="grid grid-cols-4 gap-6">
+        @for (item of items; track $index) {
+        <app-starter-kit-cards [starterKitData]="item"></app-starter-kit-cards>
+        }
+      </div>
     </div>
   `,
-    styles: ``,
-    imports: [StarterKitCardsComponent]
+  styles: ``,
+  imports: [StarterKitCardsComponent],
 })
 export class SimilarKitsComponent {
   items = [
@@ -28,6 +28,20 @@ export class SimilarKitsComponent {
       website: 'https://developerkit.com',
       pricing: '$99.99',
       rating: 4.5,
+      reviews: [
+        {
+          id: 1,
+          userName: 'User1',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'Great kit for beginners!',
+        },
+        {
+          id: 2,
+          userName: 'User2',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'I love the variety of tools included.',
+        },
+      ],
     },
     {
       id: 2,
@@ -38,6 +52,20 @@ export class SimilarKitsComponent {
       website: 'https://homegardening.com',
       pricing: '$49.99',
       rating: 4.7,
+      reviews: [
+        {
+          id: 1,
+          userName: 'User1',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'Great kit for beginners!',
+        },
+        {
+          id: 2,
+          userName: 'User2',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'I love the variety of tools included.',
+        },
+      ],
     },
     {
       id: 3,
@@ -49,6 +77,20 @@ export class SimilarKitsComponent {
       website: 'https://progamingset.com',
       pricing: '$199.99',
       rating: 4.8,
+      reviews: [
+        {
+          id: 1,
+          userName: 'User1',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'Great kit for beginners!',
+        },
+        {
+          id: 2,
+          userName: 'User2',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'I love the variety of tools included.',
+        },
+      ],
     },
     {
       id: 4,
@@ -59,6 +101,20 @@ export class SimilarKitsComponent {
       website: 'https://artcraftkit.com',
       pricing: '$29.99',
       rating: 4.4,
+      reviews: [
+        {
+          id: 1,
+          userName: 'User1',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'Great kit for beginners!',
+        },
+        {
+          id: 2,
+          userName: 'User2',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'I love the variety of tools included.',
+        },
+      ],
     },
     {
       id: 5,
@@ -69,6 +125,20 @@ export class SimilarKitsComponent {
       website: 'https://fitnesspropack.com',
       pricing: '$89.99',
       rating: 4.6,
+      reviews: [
+        {
+          id: 1,
+          userName: 'User1',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'Great kit for beginners!',
+        },
+        {
+          id: 2,
+          userName: 'User2',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'I love the variety of tools included.',
+        },
+      ],
     },
   ];
 }

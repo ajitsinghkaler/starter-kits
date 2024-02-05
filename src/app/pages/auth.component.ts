@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { LoginComponent } from '../components/login.component';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -11,6 +10,6 @@ import { RouterOutlet } from '@angular/router';
     </div>
   </div>`,
   styles: ``,
-  imports: [LoginComponent, RouterOutlet],
+  imports: [RouterOutlet],
 })
 export class AuthComponent {}

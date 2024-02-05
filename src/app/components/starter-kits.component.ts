@@ -41,6 +41,20 @@ export class StarterKitsComponent {
       website: 'https://developerkit.com',
       pricing: '$99.99',
       rating: 4.5,
+      reviews: [
+        {
+          id: 1,
+          userName: 'User1',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'Great kit for beginners!',
+        },
+        {
+          id: 2,
+          userName: 'User2',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'I love the variety of tools included.',
+        },
+      ],
     },
     {
       id: 2,
@@ -51,6 +65,20 @@ export class StarterKitsComponent {
       website: 'https://homegardening.com',
       pricing: '$49.99',
       rating: 4.7,
+      reviews: [
+        {
+          id: 1,
+          userName: 'User1',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'Great kit for beginners!',
+        },
+        {
+          id: 2,
+          userName: 'User2',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'I love the variety of tools included.',
+        },
+      ],
     },
     {
       id: 3,
@@ -62,6 +90,20 @@ export class StarterKitsComponent {
       website: 'https://progamingset.com',
       pricing: '$199.99',
       rating: 4.8,
+      reviews: [
+        {
+          id: 1,
+          userName: 'User1',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'Great kit for beginners!',
+        },
+        {
+          id: 2,
+          userName: 'User2',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'I love the variety of tools included.',
+        },
+      ],
     },
     {
       id: 4,
@@ -72,6 +114,20 @@ export class StarterKitsComponent {
       website: 'https://artcraftkit.com',
       pricing: '$29.99',
       rating: 4.4,
+      reviews: [
+        {
+          id: 1,
+          userName: 'User1',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'Great kit for beginners!',
+        },
+        {
+          id: 2,
+          userName: 'User2',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'I love the variety of tools included.',
+        },
+      ],
     },
     {
       id: 5,
@@ -82,6 +138,20 @@ export class StarterKitsComponent {
       website: 'https://fitnesspropack.com',
       pricing: '$89.99',
       rating: 4.6,
+      reviews: [
+        {
+          id: 1,
+          userName: 'User1',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'Great kit for beginners!',
+        },
+        {
+          id: 2,
+          userName: 'User2',
+          rating: 5, // Assuming a 5-star rating for demonstration
+          review: 'I love the variety of tools included.',
+        },
+      ],
     },
   ];
 }

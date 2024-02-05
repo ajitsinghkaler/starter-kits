@@ -1,30 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { DividerModule } from 'primeng/divider';
-import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { AuthService } from '../services/auth.service';
 
 @Component({
-  selector: 'app-signup',
+  selector: 'app-reset-password',
   standalone: true,
-  imports: [
-    FormsModule,
-    InputTextModule,
-    PasswordModule,
-    RouterLink,
-  ],
+  imports: [FormsModule, PasswordModule],
   template: `
-    <form #signUpForm="ngForm" (ngSubmit)="authService.signUpEmail(signUpForm)">
+  <div class="container mx-auto py-16">
+    <div class="flex flex-col border max-w-md px-8 py-6 mx-auto rounded-lg">
+    <form #newPassword="ngForm" (ngSubmit)="authService.newPassword(newPassword)">
       <h2 class="text-center text-2xl py-4	font-semibold">
-        Sign Up to Continue
+        Reset Your password
       </h2>
-      <div class="flex flex-col gap-2">
-        <label class="text-slate-700 font-medium" for="email">Email</label>
-
-        <input id="email" name="email" placeholder="Email" pInputText ngModel />
-      </div>
       <div class="flex flex-col gap-2 mt-4">
         <label class="text-slate-700 font-medium" for="password"
           >Password</label
@@ -62,18 +51,11 @@ import { AuthService } from '../services/auth.service';
         Sign Up
       </button>
     </form>
-    <div class="flex justify-center mt-4 text-sm items-center">
-      Already have an account? &nbsp;
-      <a
-        class="hover:underline font-semibold text-base"
-        routerLink="/auth/login"
-      >
-        Login
-      </a>
     </div>
+  </div>
   `,
   styles: ``,
 })
-export class SignupComponent {
+export class ResetPasswordComponent {
   authService = inject(AuthService);
 }

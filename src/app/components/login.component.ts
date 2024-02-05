@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { DividerModule } from 'primeng/divider';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ import { RouterLink } from '@angular/router';
     RouterLink,
   ],
   template: `
-    <form class="block" #f="ngForm">
+    <form class="block" #loginForm="ngForm" (ngSubmit)="authService.loginEmail(loginForm)">
       <h2 class="text-center text-2xl py-4	font-semibold">Login to Continue</h2>
       <div class="flex flex-col gap-2">
         <label class="text-slate-700 text-sm" for="email">Email</label>
@@ -27,7 +28,7 @@ import { RouterLink } from '@angular/router';
         <label class="text-slate-700 text-sm" for="password">Password</label>
         <p-password
           name="password"
-          id="password"
+          inputId="password"
           placeholder="Password"
           ngModel
           [toggleMask]="true"
@@ -42,41 +43,37 @@ import { RouterLink } from '@angular/router';
       >
         Login
       </button>
-      <div class="flex mt-4">
-        <a
-          class="text-center text-sm hover:underline mx-auto"
-          [routerLink]="['#']"
-          >Forgot Password?</a
-        >
-      </div>
-      <p-divider layout="horizontal" class="flex" [align]="'center'"
-        ><b>OR</b></p-divider
-      >
-      <button
-        class="flex items-center justify-center text-black hover:bg-zinc-100 border shadow rounded py-3 w-full font-medium mt-2"
-      >
-        <span class="pi pi-link mr-3"></span>
-
-        Login with Magic Link
-      </button>
-      <button
-        class="flex items-center justify-center text-black hover:bg-zinc-100 border shadow rounded py-3 w-full font-medium mt-2"
-      >
-        <span class="pi pi-google mr-3"></span>
-
-        Login with Google
-      </button>
-      <div class="flex justify-center mt-4 text-sm items-center">
-        Don't have an account? &nbsp;
-        <a
-          class="hover:underline font-semibold text-base"
-          [routerLink]="['signup']"
-        >
-          Sign Up
-        </a>
-      </div>
     </form>
+
+    <div class="flex mt-4">
+      <a
+        class="text-center text-sm hover:underline mx-auto"
+        routerLink="/auth/forgot-password"
+        >Forgot Password?</a
+      >
+    </div>
+    <p-divider layout="horizontal" class="flex" [align]="'center'"
+      ><b>OR</b></p-divider
+    >
+    <button
+      class="flex items-center justify-center text-black hover:bg-zinc-100 border shadow rounded py-3 w-full font-medium mt-2"
+    >
+      <span class="pi pi-google mr-3"></span>
+
+      Login with Google
+    </button>
+    <div class="flex justify-center mt-4 text-sm items-center">
+      Don't have an account? &nbsp;
+      <a
+        class="hover:underline font-semibold text-base"
+        routerLink="/auth/signup"
+      >
+        Sign Up
+      </a>
+    </div>
   `,
   styles: ``,
 })
-export class LoginComponent {}
+export class LoginComponent {
+  authService = inject(AuthService);
+}
