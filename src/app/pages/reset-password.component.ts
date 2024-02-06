@@ -48,7 +48,7 @@ import { AuthService } from '../services/auth.service';
         class="bg-black text-white rounded py-3 w-full font-medium mt-6 hover:bg-gray-800"
         type="submit"
       >
-        Sign Up
+        Reset Password
       </button>
     </form>
     </div>

@@ -49,6 +49,11 @@ export const routes: Routes = [
       import('./pages/profile.component').then((c) => c.ProfileComponent),
   },
   {
+    path:'contact',
+    loadComponent: () =>
+      import('./pages/contact.component').then((c) => c.ContactComponent),
+  },
+  {
     path:'**',
     loadComponent: () =>
       import('./pages/not-found.component').then((c) => c.NotFoundComponent),

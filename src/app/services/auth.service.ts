@@ -74,4 +74,8 @@ export class AuthService {
       password: password,
     });
   }
+
+  getUser(){
+    return this.supabaseService.supabase.auth.getUser();
+  }
 }

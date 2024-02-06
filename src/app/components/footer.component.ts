@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [],
+  imports: [ RouterLink],
   host: {
     class: 'border-t mt-auto'
   },
@@ -58,23 +59,23 @@ import { Component } from '@angular/core';
       </div>
       <div class="w-1/2 md:w-1/4 px-4 mt-8 md:mt-0">
         <ul class="space-y-4">
-          <li><a class="hover:text-sky-600" href="/">Home</a></li>
-          <li><a class="hover:text-sky-600" href="/#pricing">Pricing</a></li>
-          <li><a class="hover:text-sky-600" href="/#features">Features</a></li>
+          <li><a class="hover:underline" routerLink="/">Home</a></li>
+          <li><a class="hover:underline" routerLink="/pricing">Pricing</a></li>
+          <li><a class="hover:underline" routerLink="/features">Features</a></li>
         </ul>
       </div>
       <div class="w-1/2 md:w-1/4 px-4 mt-8 md:mt-0">
         <ul class="space-y-4">
           <li>
-            <a class="hover:text-sky-600" href="tos.html">Terms of service</a>
+            <a class="hover:underline" routerLink="/tos">Terms of service</a>
           </li>
           <li>
-            <a class="hover:text-sky-600" href="privacy.html">Privacy policy</a>
+            <a class="hover:underline" routerLink="/privacy">Privacy policy</a>
           </li>
           <li>
-            <a class="hover:text-sky-600" href="refund.html">Refund policy</a>
+            <a class="hover:underline" routerLink="/refund">Refund policy</a>
           </li>
-          <li><a class="hover:text-sky-600" href="contact.html">Support</a></li>
+          <li><a class="hover:underline" routerLink="/contact">Support</a></li>
         </ul>
       </div>
     </footer>

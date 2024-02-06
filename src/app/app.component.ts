@@ -17,7 +17,14 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'starter-kits';
-  authService = inject(AuthService)
-  session = this.authService.session
-  authChanges = this.authService.authChanges((_, session) => (this.session = session))
+  authService = inject(AuthService);
+  ngOnInit() {
+    this.authService.getUser().then((user) => {
+      if (user) {
+        console.log('User is logged in', user);
+      } else {
+        console.log('User is not logged in');
+      }
+    });
+  }
 }
