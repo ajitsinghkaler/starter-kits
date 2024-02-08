@@ -7,28 +7,30 @@ import { Injectable, inject } from '@angular/core';
 // } from '@supabase/supabase-js';
 import { SupabaseService } from './supabase.service';
 import { NgForm } from '@angular/forms';
-import { AuthChangeEvent, AuthSession, Session } from '@supabase/supabase-js';
-
+import {
+  AuthChangeEvent,
+  AuthSession,
+  Session,
+  User,
+  UserResponse,
+} from '@supabase/supabase-js';
+import { patchState, signalState } from '@ngrx/signals';
+type UserState = {
+  user: User | null;
+};
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  userState = signalState<UserState>({ user: null });
   supabaseService = inject(SupabaseService);
 
-  _session: AuthSession | null = null;
-
-  get session() {
-    this.supabaseService.supabase.auth.getSession().then(({ data }) => {
-      this._session = data.session;
-    });
-    return this._session;
+  constructor() {
+    this.getUser();
   }
 
   authChanges(
-    callback: (
-      event: AuthChangeEvent,
-      session: Session | null
-    ) => void
+    callback: (event: AuthChangeEvent, session: Session | null) => void
   ) {
     return this.supabaseService.supabase.auth.onAuthStateChange(callback);
   }
@@ -36,7 +38,7 @@ export class AuthService {
   signUpEmail(form: NgForm) {
     const { email, password, repeatPassword } = form.value;
     if (password !== repeatPassword) {
-      return 
+      return;
     }
     return this.supabaseService.supabase.auth.signUp({
       email: email,
@@ -59,7 +61,7 @@ export class AuthService {
   resetPassword(form: NgForm) {
     const { email } = form.value;
 
-    return this.supabaseService.supabase.auth.resetPasswordForEmail(email,{
+    return this.supabaseService.supabase.auth.resetPasswordForEmail(email, {
       redirectTo: 'http://localhost:4200/reset-password',
     });
   }
@@ -75,7 +77,16 @@ export class AuthService {
     });
   }
 
-  getUser(){
-    return this.supabaseService.supabase.auth.getUser();
+  /**
+   * Retrieves the currently authenticated user.
+   * @returns {Promise<SupabaseUser | null>} A promise that resolves to the authenticated user or null if no user is authenticated.
+   */
+  async getUser() {
+    return await this.supabaseService.supabase.auth
+      .getUser()
+      .then((user) => {
+        patchState(this.userState, () => ({ user: user.data.user }));
+        return user;
+      });
   }
 }

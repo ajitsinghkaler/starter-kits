@@ -47,6 +47,12 @@ import { RouterLink } from '@angular/router';
               Contact
             </a>
             <a
+              routerLink="/profile"
+              class="block mt-4 lg:inline-block lg:mt-0 hover:bg-zinc-100 px-4 py-2 rounded mr-4"
+            >
+              Profile
+            </a>
+            <a
               routerLink="/auth/login"
               class="block mt-4 lg:inline-block lg:mt-0 hover:bg-zinc-100 px-4 py-2 rounded mr-4"
             >

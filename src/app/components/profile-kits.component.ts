@@ -46,11 +46,10 @@ import { DataViewModule } from 'primeng/dataview';
                       '$' + item.price
                     }}</span>
                     <button
-                      pButton
                       icon="pi pi-shopping-cart"
                       class="md:align-self-end mb-2 p-button-rounded"
                       [disabled]="item.inventoryStatus === 'OUTOFSTOCK'"
-                    ></button>
+                    >button</button>
                   </div>
                 </div>
               </div>

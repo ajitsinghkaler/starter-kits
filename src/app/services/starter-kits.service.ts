@@ -2,12 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { StarterKit } from '../models/starter-kit';
 import { SupabaseService } from './supabase.service';
 import { NgForm } from '@angular/forms';
-import { Tables } from '../../../types/supabase';
-
-type kitsState = {
-  starterkits: StarterKit[];
-  isLoading: boolean;
-};
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +33,6 @@ export class StarterKitsService {
       price: 10,
       pricing_type: 'Paid',
       kit_image: value.image,
-      user: '46b2f980-9a28-484c-8177-d39e4748e949',
     });
   }
 
