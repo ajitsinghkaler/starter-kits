@@ -13,7 +13,7 @@ import { RatingModule } from 'primeng/rating';
       <div class="flex items-center">
         <p-avatar label="A" styleClass="mr-2" size="large"></p-avatar>
         <div class="flex">
-            <p-rating [readonly]="true" [cancel]="false"></p-rating>
+            <p-rating [stars]="reviewData().rating" [readonly]="true" [cancel]="false"></p-rating>
             <span class="text-gray-700 ml-3">({{reviewData().rating}})</span>
         </div>
       </div>

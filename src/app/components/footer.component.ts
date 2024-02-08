@@ -14,7 +14,7 @@ import { RouterLink } from '@angular/router';
         <a aria-label="Home" href="/">
           <div class="flex items-center">
             <!-- <img src="logo-1.svg" /> -->
-            <h1 class="font-bold">Chatter</h1>
+            <h1 class="font-bold">codelaunchhub</h1>
           </div>
         </a>
         <p class="mt-4">Make language learning fun &amp; effective.</p>

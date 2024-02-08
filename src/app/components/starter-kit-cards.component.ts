@@ -8,12 +8,12 @@ import { StarterKit } from '../models/starter-kit';
   imports: [CardModule],
   template: `
   <div class="h-full">
-    <p-card header="{{ starterKitData().name }}" [style]="{height:'100%'}">
+    <p-card header="{{ starterKit().name }}" [style]="{height:'100%'}">
       <ng-template pTemplate="header">
-        <img alt="Card" [src]="starterKitData().image" />
+        <img alt="Card" [src]="starterKit().image" />
       </ng-template>
       <p>
-        {{ starterKitData().description }}
+        {{ starterKit().short_description }}
       </p>
     </p-card>
   </div>
@@ -21,5 +21,5 @@ import { StarterKit } from '../models/starter-kit';
   styles: ``,
 })
 export class StarterKitCardsComponent {
-  starterKitData = input.required<StarterKit>();
+  starterKit = input.required<StarterKit>();
 }

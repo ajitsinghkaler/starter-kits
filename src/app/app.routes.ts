@@ -34,7 +34,7 @@ export const routes: Routes = [
       import('./pages/reset-password.component').then((c) => c.ResetPasswordComponent),
   },
   {
-    path: 'details',
+    path: 'details/:starterKitId',
     loadComponent: () =>
       import('./pages/details.component').then((c) => c.DetailsComponent),
   },

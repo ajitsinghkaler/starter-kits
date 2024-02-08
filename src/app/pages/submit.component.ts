@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RatingModule } from 'primeng/rating';
+import { StarterKitsService } from '../services/starter-kits.service';
 
 @Component({
   selector: 'app-submit',
@@ -11,7 +12,7 @@ import { RatingModule } from 'primeng/rating';
   template: `
     <form
       #starterKitForm="ngForm"
-      (ngSubmit)="onSubmit(starterKitForm.value)"
+      (ngSubmit)="starterKit.createStarterKit(starterKitForm)"
       class="p-4 space-y-4 bg-white shadow-md rounded px-8 pt-6 pb-8  container mx-auto"
     >
       <div class="flex items-center gap-4">
@@ -120,7 +121,5 @@ import { RatingModule } from 'primeng/rating';
   styles: ``,
 })
 export class SubmitComponent {
-  onSubmit(form: any) {
-    console.log(form);
-  }
+  starterKit = inject(StarterKitsService);
 }
