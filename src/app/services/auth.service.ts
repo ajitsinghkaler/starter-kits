@@ -7,13 +7,7 @@ import { Injectable, inject } from '@angular/core';
 // } from '@supabase/supabase-js';
 import { SupabaseService } from './supabase.service';
 import { NgForm } from '@angular/forms';
-import {
-  AuthChangeEvent,
-  AuthSession,
-  Session,
-  User,
-  UserResponse,
-} from '@supabase/supabase-js';
+import { AuthChangeEvent, Session, User } from '@supabase/supabase-js';
 import { patchState, signalState } from '@ngrx/signals';
 type UserState = {
   user: User | null;
@@ -82,11 +76,9 @@ export class AuthService {
    * @returns {Promise<SupabaseUser | null>} A promise that resolves to the authenticated user or null if no user is authenticated.
    */
   async getUser() {
-    return await this.supabaseService.supabase.auth
-      .getUser()
-      .then((user) => {
-        patchState(this.userState, () => ({ user: user.data.user }));
-        return user;
-      });
+    return await this.supabaseService.supabase.auth.getUser().then((res) => {
+      patchState(this.userState, () => ({ user: res.data.user }));
+      return res;
+    });
   }
 }

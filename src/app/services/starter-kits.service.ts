@@ -14,7 +14,7 @@ export class StarterKitsService {
   async getStarterKits() {
     const { data, error } = await this.supabaseService.supabase
       .from('starter_kits')
-      .select()
+      .select("*")
       .returns<StarterKit[]>();
     if (error) {
       console.error('Error fetching users:', error);

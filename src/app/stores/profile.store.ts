@@ -1,24 +1,35 @@
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
-import { StarterKit } from '../models/starter-kit';
 import { inject } from '@angular/core';
-import { StarterKitsService } from '../services/starter-kits.service';
 import { ProfileService } from '../services/profile.service';
+import { Profile } from '../models/profile';
 
-type StaterKitState = {
-    starterKit: StarterKit | null;
-    isLoading: boolean;
-    isError: boolean;
-  };
-  
-  const initialState: StaterKitState = {
-    starterKit: null,
-    isLoading: false,
-    isError: false,
-  };
-  
-  export const StarterKitStore = signalStore(
-    withState(initialState),
-    withMethods((store, ProfileService = inject(ProfileService)) => ({
+type ProfileStore = {
+  profile: Profile | null;
 
-    }))
-  );
+  isLoading: boolean;
+  isError: boolean;
+};
+
+const initialState: ProfileStore = {
+  profile: null,
+  isLoading: false,
+  isError: false,
+};
+
+export const ProfileStore = signalStore(
+  withState(initialState),
+  withMethods((store, profileService = inject(ProfileService)) => ({
+    startLoading() {
+      patchState(store, { isLoading: true });
+    },
+    async loadProfile(profileId: string): Promise<void> {
+      patchState(store, { isLoading: true });
+      const { data, error } = await profileService.getProfile(profileId);
+      if (error) {
+        patchState(store, { profile: null, isError: true, isLoading: false });
+        return;
+      }
+      patchState(store, { profile: data, isLoading: false });
+    },
+  }))
+);

@@ -117,6 +117,7 @@ import { NgPlural, NgPluralCase } from '@angular/common';
         <div class="w-1/2 h-96 overflow-hidden">
           <img
             [src]="starterKitStore.starterKit()?.image || 'https://via.placeholder.com/500'"
+            alt="Boilerplate Image"
           />
         </div>
       </div>

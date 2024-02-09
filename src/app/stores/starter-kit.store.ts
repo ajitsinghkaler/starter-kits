@@ -20,9 +20,11 @@ export const StarterKitStore = signalStore(
   withMethods((store, starterKitService = inject(StarterKitsService)) => ({
     async loadStarterKit(starterKitId: number): Promise<void> {
       patchState(store, { isLoading: true });
-      const { data, error } = await starterKitService.getStarterKitById(
+      const a = await starterKitService.getStarterKitById(
         starterKitId
       );
+      const { data, error, count } = a;
+      console.log('data', a, count);
       if (error) {
         patchState(store, { starterKit: null, isError: true, isLoading: false });
         return;

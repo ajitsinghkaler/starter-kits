@@ -1,61 +1,51 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { DataViewModule } from 'primeng/dataview';
+import { StarterKit } from '../models/starter-kit';
+import { RatingModule } from 'primeng/rating';
+import { FormsModule } from '@angular/forms';
+import { ChipModule } from 'primeng/chip';
 
 @Component({
   selector: 'app-profile-kits',
   standalone: true,
-  imports: [DataViewModule],
+  imports: [DataViewModule, RatingModule, FormsModule, ChipModule],
   template: `
-    <div class="card">
-      <p-dataView #dv [value]="products">
-        <ng-template pTemplate="list" let-products>
-          <div class="grid grid-nogutter">
-            @for (item of products; track $index) {
-            <div class="col-12">
-              <div
-                class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4"
-              >
-                <img
-                  class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round"
-                  [src]="
-                    'https://primefaces.org/cdn/primeng/images/demo/product/' +
-                    item.image
-                  "
-                  [alt]="item.name"
-                />
-                <div
-                  class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4"
-                >
-                  <div
-                    class="flex flex-column align-items-center sm:align-items-start gap-3"
-                  >
-                    <div class="text-2xl font-bold text-900">
-                      {{ item.name }}
-                    </div>
-                    <div class="flex align-items-center gap-3">
-                      <span class="flex align-items-center gap-2">
-                        <i class="pi pi-tag"></i>
-                        <span class="font-semibold">{{ item.category }}</span>
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2"
-                  >
-                    <span class="text-2xl font-semibold">{{
-                      '$' + item.price
-                    }}</span>
-                    <button
-                      icon="pi pi-shopping-cart"
-                      class="md:align-self-end mb-2 p-button-rounded"
-                      [disabled]="item.inventoryStatus === 'OUTOFSTOCK'"
-                    >button</button>
-                  </div>
-                </div>
+    <div>
+      <p-dataView #dv [value]="starterKits()">
+        <ng-template let-starterKits pTemplate="list">
+          @for (starterKit of starterKits; track $index) {
+          <div class="flex p-4">
+            <div class="mr-4">
+              <img [src]="starterKit.kit_image" alt="Starter Kit Image" />
+            </div >
+            <div class="grow px-4">
+              <h3>{{ starterKit.name }}</h3>
+              <p-rating
+                [ngModel]="starterKit.rating"
+                [readonly]="true"
+                [cancel]="false"
+              ></p-rating>
+              <div class="flex gap-2 mt-4">
+                @for (tag of starterKit.tags; track $index) {
+                <p-chip [label]="tag.name"></p-chip>
+                }
               </div>
+              <p>{{ starterKit.short_description }}</p>
             </div>
-            }
+            <div class="flex flex-col">
+
+              <p>{{starterKit.pricing_type}}</p>
+              <strong>{{ starterKit.price }}</strong>
+              <div class="mt-auto">
+                <button >Edit Kit</button>
+                <button>Delete Kit</button>
+              </div>
+
+            </div>
           </div>
+          } @empty {
+          <p>No starter kits found</p>
+          }
         </ng-template>
       </p-dataView>
     </div>
@@ -63,67 +53,5 @@ import { DataViewModule } from 'primeng/dataview';
   styles: ``,
 })
 export class ProfileKitsComponent {
-  products = [
-    {
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Bamboo Watch',
-      description: 'Product Description',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5,
-    },
-    {
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Bamboo Watch',
-      description: 'Product Description',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5,
-    },
-    {
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Bamboo Watch',
-      description: 'Product Description',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5,
-    },
-    {
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Bamboo Watch',
-      description: 'Product Description',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5,
-    },
-    {
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Bamboo Watch',
-      description: 'Product Description',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5,
-    },
-    
-  ];
+  starterKits = input.required<StarterKit[]>();
 }

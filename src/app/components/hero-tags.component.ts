@@ -8,12 +8,19 @@ import { ChipModule } from 'primeng/chip';
   template: `
     <div class="flex flex-wrap gap-2 mt-6 justify-center items-stretch	">
       @for (tag of tags; track $index) {
-      <p-chip label="{{ tag }}"></p-chip>
+      <p-chip [label]="tag"></p-chip>
       }
     </div>
   `,
   styles: ``,
 })
 export class HeroTagsComponent {
-  tags = ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'Angular', 'All Categories'];
+  tags = [
+    'HTML',
+    'CSS',
+    'JavaScript',
+    'TypeScript',
+    'Angular',
+    'All Categories',
+  ];
 }
