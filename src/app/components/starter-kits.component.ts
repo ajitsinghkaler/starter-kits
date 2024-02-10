@@ -1,14 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { TabViewModule } from 'primeng/tabview';
 import { StarterKitCardsComponent } from './starter-kit-cards.component';
-import { StarterKitsService } from '../services/starter-kits.service';
 import { StarterKitsStore } from '../stores/starter-kits.store';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-starter-kits',
   standalone: true,
-  providers: [StarterKitsStore],
   imports: [TabViewModule, StarterKitCardsComponent,RouterLink],
   template: `
     <div class="container mx-auto">
@@ -42,5 +40,5 @@ import { RouterLink } from '@angular/router';
 })
 export class StarterKitsComponent {
   readonly store = inject(StarterKitsStore);
-  starterKits = this.store.loadStarterKits();
+  starterKits = this.store.loadStarterKits({});
 }

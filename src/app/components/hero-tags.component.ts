@@ -1,26 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ChipModule } from 'primeng/chip';
+import { TagStore } from '../stores/tag.store';
+import { TitleCasePipe } from '@angular/common';
+import { StarterKitsStore } from '../stores/starter-kits.store';
 
 @Component({
   selector: 'app-hero-tags',
   standalone: true,
-  imports: [ChipModule],
+  imports: [ChipModule, TitleCasePipe],
+  providers: [TagStore],
   template: `
     <div class="flex flex-wrap gap-2 mt-6 justify-center items-stretch	">
-      @for (tag of tags; track $index) {
-      <p-chip [label]="tag"></p-chip>
+      @for (tag of tagStore.topTags(); track $index) {
+      <p-chip class="cursor-pointer" (click)="filterByTag(tag.id)" [label]="tag.name | titlecase"></p-chip>
       }
     </div>
   `,
   styles: ``,
 })
 export class HeroTagsComponent {
-  tags = [
-    'HTML',
-    'CSS',
-    'JavaScript',
-    'TypeScript',
-    'Angular',
-    'All Categories',
-  ];
+  tagStore = inject(TagStore);
+  starterKitsStore = inject(StarterKitsStore);
+  tags = this.tagStore.loadTags();
+  filterByTag(tag: number) {
+    this.starterKitsStore.filterStarterKits({tag});
+  }
 }

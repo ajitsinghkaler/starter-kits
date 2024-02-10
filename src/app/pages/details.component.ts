@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, OnInit, inject, input } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { RatingModule } from 'primeng/rating';
 import { ReviewsComponent } from '../components/reviews.component';
@@ -149,7 +149,7 @@ import { NgPlural, NgPluralCase } from '@angular/common';
     NgPlural,
   ],
 })
-export class DetailsComponent {
+export class DetailsComponent implements OnInit {
   starterKitId = input<number>(0);
   starterKitStore = inject(StarterKitStore);
   reviewCount = 10;

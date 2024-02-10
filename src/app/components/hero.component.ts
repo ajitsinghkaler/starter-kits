@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { HeroTagsComponent } from "./hero-tags.component";
+import { StarterKitsStore } from '../stores/starter-kits.store';
 
 @Component({
     selector: 'app-hero',
@@ -15,7 +16,7 @@ import { HeroTagsComponent } from "./hero-tags.component";
       </p>
       <div class="gap-3 pt-12">
         <span class="p-input-icon-right w-full max-w-2xl">
-          <i class="pi pi-search mr-2"></i>
+          <i class="pi pi-search mr-2 cursor-pointer"></i>
           <input
             class="rounded-full pl-6 w-full"
             type="text"
@@ -33,5 +34,5 @@ import { HeroTagsComponent } from "./hero-tags.component";
 })
 export class HeroComponent {
   value: string = '';
-  value2: string = '';
+  starterKitsStore = inject(StarterKitsStore);
 }

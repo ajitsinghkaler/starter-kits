@@ -9,7 +9,6 @@ import { DropdownModule } from 'primeng/dropdown';
   template: `
     <div class="container flex justify-between mx-auto">
       <div>
-        Filters:
         <p-dropdown
           [options]="cities"
           [(ngModel)]="selectedCity"
@@ -17,14 +16,14 @@ import { DropdownModule } from 'primeng/dropdown';
           placeholder="Select filters"
         ></p-dropdown>
       </div>
-      <div>
+      <!-- <div>
         Sort by:
         <p-dropdown
           [options]="cities"
           [(ngModel)]="selectedCity"
           optionLabel="name"
         ></p-dropdown>
-      </div>
+      </div> -->
     </div>
   `,
   styles: ``,
