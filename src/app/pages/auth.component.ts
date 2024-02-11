@@ -9,7 +9,6 @@ import { RouterOutlet } from '@angular/router';
       <router-outlet></router-outlet>
     </div>
   </div>`,
-  styles: ``,
   imports: [RouterOutlet],
 })
 export class AuthComponent {}

@@ -40,5 +40,5 @@ import { RouterLink } from '@angular/router';
 })
 export class StarterKitsComponent {
   readonly store = inject(StarterKitsStore);
-  starterKits = this.store.loadStarterKits({});
+  starterKits = this.store.loadStarterKits();
 }

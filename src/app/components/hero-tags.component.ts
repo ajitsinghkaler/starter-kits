@@ -12,7 +12,11 @@ import { StarterKitsStore } from '../stores/starter-kits.store';
   template: `
     <div class="flex flex-wrap gap-2 mt-6 justify-center items-stretch	">
       @for (tag of tagStore.topTags(); track $index) {
-      <p-chip class="cursor-pointer" (click)="filterByTag(tag.id)" [label]="tag.name | titlecase"></p-chip>
+      <p-chip
+        class="cursor-pointer"
+        (click)="filterByTag(tag.id)"
+        [label]="tag.name | titlecase"
+      ></p-chip>
       }
     </div>
   `,
@@ -22,7 +26,11 @@ export class HeroTagsComponent {
   tagStore = inject(TagStore);
   starterKitsStore = inject(StarterKitsStore);
   tags = this.tagStore.loadTags();
-  filterByTag(tag: number) {
-    this.starterKitsStore.filterStarterKits({tag});
+  filterByTag(tags: number) {
+    this.starterKitsStore.starterKitFiltered({
+      ...this.starterKitsStore.filters(), 
+      tags: tags.toString(),
+
+    });
   }
 }

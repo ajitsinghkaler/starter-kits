@@ -7,12 +7,8 @@ export interface Filters {
   name: string;
   tags: string;
   pricing_type: string;
-}
-
-interface AppliedFilters {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: (value: string) => any
-  ;
+  featured: boolean;
+  new: boolean;
 }
 
 @Injectable({
@@ -24,25 +20,58 @@ export class StarterKitsService {
   constructor() {}
 
   async getStarterKits(filters: Partial<Filters> = {}) {
-    let query = this.supabaseService.supabase.from('starter_kits').select('*');
+    console.log('filters', filters);
+    let ids: number[] = [];
+    if (filters.tags) {
+      filters.tags = filters.tags.toString();
+      const { data: taggedKits, error: tagError } =
+        await this.supabaseService.supabase
+          .from('starter_kit_tags')
+          .select('starter_kit')
+          .eq('tags', filters.tags);
 
-    const appliedFilters: AppliedFilters = {
-      name: (value: string) => query.ilike('name', `%${value}%`),
-      tags: (value: string) => query.in('tags.id', [value.split(',')]),
-      pricing_type: (value: string) => query.eq('pricing_type', value),
-    };
-    
+      if (tagError || !taggedKits.length) {
+        console.error('Error fetching starter kits or no kits found', tagError);
+        return;
+      }
+
+      ids = taggedKits.map((kit) => kit.starter_kit);
+    }
+    console.log('ids', ids);
+    let query = this.supabaseService.supabase
+      .from('starter_kits')
+      .select(`*,   tags(*)`);
+
     Object.keys(filters).forEach((key) => {
-      const filterKey = key as keyof Filters; // Assert key is a keyof Filters
+      const filterKey = key as keyof Filters;
       const filterValue = filters[filterKey];
-      if (filterValue !== undefined) {
-        query = appliedFilters[filterKey](filterValue);
+
+      if (filterValue) {
+        switch (filterKey) {
+          case 'name':
+            query = query.filter(filterKey, 'ilike', `%${filterValue}%`);
+            break;
+          case 'tags':
+            query = query.in('id', ids);
+            break;
+          case 'pricing_type':
+            query = query.filter('pricing_type', 'eq', filterValue);
+            break;
+          case 'featured':
+            query = query.filter('featured', 'eq', filterValue);
+            break;
+          case 'new':
+            query = query.filter('new', 'eq', filterValue);
+            break;
+          default:
+            break;
+        }
       }
     });
 
-    // Execute the query
-
+    console.log('query', query);
     const { data, error } = await query.returns<StarterKit[]>();
+    console.log('data', data);
 
     if (error) {
       console.error('Error fetching users:', error);
@@ -74,7 +103,8 @@ export class StarterKitsService {
       reviews(
         *,
         profile(avatar_url, full_name)
-        )`
+        ),
+      reviewsCount: reviews(count)`
       )
       .eq('id', id)
       .single<StarterKit>();

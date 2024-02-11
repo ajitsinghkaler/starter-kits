@@ -37,12 +37,14 @@ export const StarterKitsStore = signalStore(
       const starterKits = (await starterKitService.getStarterKits({})) || [];
       patchState(store, { staterKits: starterKits, isLoading: false });
     },
-    starterKitFiltered: rxMethod<Filters>(
+    starterKitFiltered: rxMethod(
       pipe(
+        tap((filters) => patchState(store, { filters })),
         debounceTime(300),
         distinctUntilChanged(),
         tap(() => patchState(store, { isLoading: true })),
-        switchMap((filters) => {
+        switchMap((filters: Filters) => {
+          console.log('filters', filters);
           return from(starterKitService.getStarterKits(filters)).pipe(
             tapResponse({
               next: (staterKits) => patchState(store, { staterKits }),
