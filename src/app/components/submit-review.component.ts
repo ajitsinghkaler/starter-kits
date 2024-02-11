@@ -10,33 +10,44 @@ import { RatingModule } from 'primeng/rating';
   standalone: true,
   imports: [FormsModule, InputTextareaModule, RatingModule],
   template: `
-    <div class="container mx-auto">
-      <div>
-        <h1>Submit a Review</h1>
-      </div>
+    <div class="max-w-3xl mb-20 mt-6 mx-auto">
       <form
         #submitReviewForm="ngForm"
         (ngSubmit)="
           reviewService.createReview(
             submitReviewForm,
             this.starterKitStore.starterKit()?.id
-          )
+          );
+          starterKitStore.stopWritingReview()
         "
-        class="flex flex-col gap-4"
+        class="flex flex-col gap-4 "
       >
-        <p-rating name="rating" [cancel]="false" ngModel></p-rating>
+        <div class="flex ">
+          Your Star Rating:
+          <p-rating
+            class="ml-4"
+            name="rating"
+            [cancel]="false"
+            ngModel
+          ></p-rating>
+        </div>
 
         <div class="flex flex-col">
-          <label for="review">Review</label>
           <textarea
             ngModel
             rows="5"
             pInputTextarea
             id="review"
             name="review_text"
+            placeholder="Write your review here..."
           ></textarea>
         </div>
-        <button type="submit">Submit</button>
+        <button
+          class="bg-black text-white px-4 py-2 hover:bg-gray-900 transition rounded max-w-32 w-full self-end	"
+          type="submit"
+        >
+          Submit
+        </button>
       </form>
     </div>
   `,

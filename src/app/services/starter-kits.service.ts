@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { StarterKit } from '../models/starter-kit';
 import { SupabaseService } from './supabase.service';
 import { NgForm } from '@angular/forms';
+import { Bookmark, ReviewsCount } from '../stores/starter-kit.store';
 
 export interface Filters {
   name: string;
@@ -104,9 +105,11 @@ export class StarterKitsService {
         *,
         profile(avatar_url, full_name)
         ),
+      bookmarks: profile!saved_starter_kits(count),
       reviewsCount: reviews(count)`
+      
       )
       .eq('id', id)
-      .single<StarterKit>();
+      .single<StarterKit & Bookmark & ReviewsCount>();
   }
 }

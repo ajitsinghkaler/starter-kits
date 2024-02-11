@@ -10,18 +10,12 @@ import { StarterKitsStore } from '../stores/starter-kits.store';
   providers: [StarterKitsStore],
   template: `
     <app-hero></app-hero>
-    @defer (on viewport; prefetch on idle) {
+    @defer (on immediate; prefetch on idle) {
     <app-filters></app-filters>
     <app-starter-kits></app-starter-kits>
-    } @placeholder {
-    <p>Loading...</p>
     }
   `,
   styles: ``,
-  imports: [
-    HeroComponent,
-    StarterKitsComponent,
-    FiltersComponent,
-  ],
+  imports: [HeroComponent, StarterKitsComponent, FiltersComponent],
 })
 export class HomeComponent {}

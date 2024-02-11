@@ -28,7 +28,7 @@ import { AuthService } from '../services/auth.service';
           >
         </div>
       </div>
-      <div>
+      <div class="mt-6">
         {{ reviewData().review_text }}
       </div>
     </div>
