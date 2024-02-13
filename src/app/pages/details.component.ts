@@ -119,7 +119,7 @@ import { FormsModule } from '@angular/forms';
           <img
             class="object-cover w-full h-full rounded-lg"
             [src]="
-              starterKitStore.starterKit()?.image ||
+              starterKitStore.starterKit()?.kit_image ||
               'https://via.placeholder.com/500'
             "
             alt="Boilerplate Image"

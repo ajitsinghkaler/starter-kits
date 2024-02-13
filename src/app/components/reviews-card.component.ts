@@ -1,9 +1,8 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { Review } from '../models/review';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-reviews-card',

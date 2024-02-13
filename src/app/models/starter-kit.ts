@@ -6,7 +6,7 @@ export type StarterKit = {
   name: string;
   description: string;
   short_description: string;
-  image: string;
+  kit_image: string;
   tags: Tag[];
   website: string;
   price: string;

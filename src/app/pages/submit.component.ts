@@ -13,11 +13,15 @@ import { StarterKitsService } from '../services/starter-kits.service';
     <form
       #starterKitForm="ngForm"
       (ngSubmit)="starterKit.createStarterKit(starterKitForm)"
-      class="p-4 space-y-4 bg-white shadow-md rounded px-8 pt-6 pb-8  container mx-auto"
+      class="max-w-4xl space-y-6 rounded-lg px-8 py-6 container mx-auto mt-12 mb-40 bg-white border-0 shadow:none sm:shadow-lg sm:border"
     >
-      <div class="flex items-center gap-4">
-        <div class="w-1/2">
-          <label for="name" class="block text-gray-700 text-sm font-bold mb-2"
+      <h1 class="text-3xl font-semibold text-gray-900 mb-8">
+        Submit a Boilerplate
+      </h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700"
             >Name</label
           >
           <input
@@ -25,15 +29,14 @@ import { StarterKitsService } from '../services/starter-kits.service';
             id="name"
             name="name"
             pInputText
-            class="w-full"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             ngModel
             required
           />
         </div>
-        <div class="w-1/2">
-          <label
-            for="website"
-            class="block text-gray-700 text-sm font-bold mb-2"
+
+        <div>
+          <label for="website" class="block text-sm font-medium text-gray-700"
             >Website URL</label
           >
           <input
@@ -41,16 +44,30 @@ import { StarterKitsService } from '../services/starter-kits.service';
             id="website"
             name="website"
             pInputText
-            class="w-full"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             ngModel
             required
           />
         </div>
       </div>
+
       <div>
-        <label
-          for="description"
-          class="block text-gray-700 text-sm font-bold mb-2"
+        <label for="description" class="block text-sm font-medium text-gray-700"
+          >Short Description</label
+        >
+        <input
+          id="shot_description"
+          name="description"
+          rows="3"
+          pInputText
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          ngModel
+          required
+        />
+      </div>
+
+      <div>
+        <label for="description" class="block text-sm font-medium text-gray-700"
           >Description</label
         >
         <textarea
@@ -58,14 +75,14 @@ import { StarterKitsService } from '../services/starter-kits.service';
           name="description"
           rows="3"
           pInputTextarea
-          class="w-full"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           ngModel
           required
         ></textarea>
       </div>
 
       <div>
-        <label for="image" class="block text-gray-700 text-sm font-bold mb-2"
+        <label for="image" class="block text-sm font-medium text-gray-700"
           >Image URL</label
         >
         <input
@@ -73,14 +90,14 @@ import { StarterKitsService } from '../services/starter-kits.service';
           id="image"
           name="image"
           pInputText
-          class="w-full"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           ngModel
           required
         />
       </div>
 
       <div>
-        <label for="tags" class="block text-gray-700 text-sm font-bold mb-2"
+        <label for="tags" class="block text-sm font-medium text-gray-700"
           >Tags (comma-separated)</label
         >
         <input
@@ -88,31 +105,46 @@ import { StarterKitsService } from '../services/starter-kits.service';
           id="tags"
           name="tags"
           pInputText
-          class="w-full"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           ngModel
           required
         />
       </div>
 
-      <div>
-        <label for="pricing" class="block text-gray-700 text-sm font-bold mb-2"
-          >Pricing</label
-        >
-        <input
-          type="text"
-          id="pricing"
-          name="pricing"
-          pInputText
-          class="w-full"
-          ngModel
-          required
-        />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="pricing" class="block text-sm font-medium text-gray-700"
+            >Pricing Type</label
+          >
+          <input
+            type="text"
+            id="pricing"
+            name="pricing"
+            pInputText
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            ngModel
+            required
+          />
+        </div>
+        <div>
+          <label for="pricing" class="block text-sm font-medium text-gray-700"
+            >Pricing</label
+          >
+          <input
+            type="text"
+            id="pricing"
+            name="pricing"
+            pInputText
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            ngModel
+            required
+          />
+        </div>
       </div>
 
       <button
         type="submit"
-        label="Submit"
-        class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
       >
         Submit
       </button>

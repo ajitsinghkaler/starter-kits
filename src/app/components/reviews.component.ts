@@ -11,9 +11,9 @@ import { TitleCasePipe } from '@angular/common';
   template: `
     <div class="container mx-auto">
       <div class="flex items-center justify-between">
-        <h1 class="text-xl font-bold tracking-tighter sm:text-3xl my-6">
+        <h2 class="text-xl font-bold tracking-tighter sm:text-3xl my-6">
           {{ starterKitStore.starterKit()?.name | titlecase }} Reviews
-        </h1>
+        </h2>
         @if (starterKitStore.writeReview()) {
         <button
           class="bg-red-600 text-white px-4 py-2 hover:bg-red-700 transition flex items-center rounded"

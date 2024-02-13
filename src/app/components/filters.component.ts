@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
+import { StarterKitsStore } from '../stores/starter-kits.store';
 
 @Component({
   selector: 'app-filters',
@@ -10,33 +11,28 @@ import { DropdownModule } from 'primeng/dropdown';
     <div class="container flex justify-between mx-auto">
       <div>
         <p-dropdown
-          [options]="cities"
-          [(ngModel)]="selectedCity"
-          optionLabel="name"
-          placeholder="Select filters"
+          [options]="pricingType"
+          [ngModel]="starterKitStore.filters().pricing_type"
+          (ngModelChange)="filterByPricingType($event)"
+          [showClear]="true"
+          placeholder="Pricing Filter"
         ></p-dropdown>
       </div>
-      <!-- <div>
-        Sort by:
-        <p-dropdown
-          [options]="cities"
-          [(ngModel)]="selectedCity"
-          optionLabel="name"
-        ></p-dropdown>
-      </div> -->
     </div>
   `,
   styles: ``,
 })
 export class FiltersComponent {
-  cities = [
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' },
+  pricingType = [
+    "Free",
+    "Paid",
   ];
-  selectedCity =  this.cities[0];
-  selectedCities =  [];
+  starterKitStore = inject(StarterKitsStore);
+  filterByPricingType(pricingType: string) {
+    this.starterKitStore.starterKitFiltered({
+      ...this.starterKitStore.filters(),
+      pricing_type: pricingType,
+    });
+  }
 
 }

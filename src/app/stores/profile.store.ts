@@ -5,7 +5,6 @@ import { Profile } from '../models/profile';
 
 type ProfileStore = {
   profile: Profile | null;
-
   isLoading: boolean;
   isError: boolean;
 };

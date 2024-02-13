@@ -11,8 +11,8 @@ import { StarterKitsStore } from '../stores/starter-kits.store';
   template: `
     <app-hero></app-hero>
     @defer (on immediate; prefetch on idle) {
-    <app-filters></app-filters>
-    <app-starter-kits></app-starter-kits>
+    <app-filters class="mb-4 block"></app-filters>
+    <app-starter-kits class="block mb-40"></app-starter-kits>
     }
   `,
   styles: ``,

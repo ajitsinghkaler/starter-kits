@@ -12,7 +12,7 @@ export class ProfileService {
   getProfile(id: string) {
     return this.supabaseService.supabase
       .from('profile')
-      .select('*, starter_kits(*, tags(*))')
+      .select('*, myKits: starter_kits!starter_kits_user_fkey(*, tags(*)), savedKits: starter_kits!saved_starter_kits(*, tags(*))')
       .eq('id', id)
       .single<Profile>();
   }

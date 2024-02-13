@@ -7,7 +7,7 @@ import { Bookmark, ReviewsCount } from '../stores/starter-kit.store';
 export interface Filters {
   name: string;
   tags: string;
-  pricing_type: string;
+  pricing_type: "Free" | "Paid";
   featured: boolean;
   new: boolean;
 }
