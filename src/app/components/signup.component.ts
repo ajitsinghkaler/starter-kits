@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { AuthService } from '../services/auth.service';
@@ -56,7 +55,7 @@ import { AuthService } from '../services/auth.service';
         ></p-password>
       </div>
       <button
-        class="bg-black text-white rounded py-3 w-full font-medium mt-6 hover:bg-gray-800"
+        class="bg-black text-white rounded py-3 w-full font-bold mt-6 hover:bg-gray-800"
         type="submit"
       >
         Sign Up

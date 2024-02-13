@@ -9,13 +9,13 @@ import { AuthService } from '../services/auth.service';
   imports: [FormsModule, PasswordModule],
   template: `
   <div class="container mx-auto py-16">
-    <div class="flex flex-col border max-w-md px-8 py-6 mx-auto rounded-lg">
+    <div class="flex flex-col border max-w-md px-8 pt-6 pb-10 mx-auto rounded-lg">
     <form #newPassword="ngForm" (ngSubmit)="authService.newPassword(newPassword)">
       <h2 class="text-center text-2xl py-4	font-semibold">
         Reset Your password
       </h2>
       <div class="flex flex-col gap-2 mt-4">
-        <label class="text-slate-700 font-medium" for="password"
+        <label class="text-slate-700 text-sm" for="password"
           >Password</label
         >
         <p-password
@@ -30,7 +30,7 @@ import { AuthService } from '../services/auth.service';
         ></p-password>
       </div>
       <div class="flex flex-col gap-2 mt-4">
-        <label class="text-slate-700 font-medium" for="repeat-password"
+        <label class="text-slate-700 text-sm" for="repeat-password"
           >Repeat Password</label
         >
         <p-password
@@ -45,10 +45,10 @@ import { AuthService } from '../services/auth.service';
         ></p-password>
       </div>
       <button
-        class="bg-black text-white rounded py-3 w-full font-medium mt-6 hover:bg-gray-800"
+        class="bg-black text-white rounded py-3 w-full font-bold mt-6 hover:bg-gray-800"
         type="submit"
       >
-        Reset Password
+        Save Password
       </button>
     </form>
     </div>

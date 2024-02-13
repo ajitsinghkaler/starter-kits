@@ -38,7 +38,7 @@ import { AuthService } from '../services/auth.service';
         ></p-password>
       </div>
       <button
-        class="bg-black text-white rounded shadow py-3 w-full font-medium mt-6 hover:bg-gray-800"
+        class="bg-black text-white rounded shadow py-3 w-full font-bold mt-6 hover:bg-gray-800"
         type="submit"
       >
         Login
@@ -56,7 +56,7 @@ import { AuthService } from '../services/auth.service';
       ><b>OR</b></p-divider
     >
     <button
-      class="flex items-center justify-center text-black hover:bg-zinc-100 border shadow rounded py-3 w-full font-medium mt-2"
+      class="flex items-center justify-center text-black hover:bg-zinc-100 border shadow rounded py-3 w-full font-bold mt-2"
     >
       <span class="pi pi-google mr-3"></span>
 

@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { TabViewModule } from 'primeng/tabview';
 import { StarterKitCardsComponent } from './starter-kit-cards.component';
 import { StarterKitsStore } from '../stores/starter-kits.store';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-starter-kits',
