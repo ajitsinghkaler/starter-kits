@@ -37,7 +37,8 @@ export const StarterKitStore = signalStore(
         return;
       }
       const totalRating = data.reviews.reduce((acc, review) => acc + review.rating, 0);
-      const avgRating = data.reviews.length > 0 ? totalRating / data.reviews.length : 0;
+      let avgRating = data.reviews.length > 0 ? totalRating / data.reviews.length : 0;
+      avgRating = Number(avgRating.toFixed(1));
 
 
       patchState(store, { starterKit: data, isLoading: false, avgRating });

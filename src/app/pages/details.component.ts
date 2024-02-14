@@ -7,6 +7,7 @@ import { StarterKitStore } from '../stores/starter-kit.store';
 import { SkeletonModule } from 'primeng/skeleton';
 import { NgPlural, NgPluralCase, TitleCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-details',
   standalone: true,
@@ -31,8 +32,8 @@ import { FormsModule } from '@angular/forms';
         </div>
       </div>
       } @else{
-      <div class="flex">
-        <div class="w-1/2 px-4">
+      <div class="flex gap-x-4 flex-wrap">
+        <div class="w-full lg:w-[calc(50%-.5rem)]">
           <div class="flex items-center">
             <p-avatar
               [label]="starterKitStore.starterKit()?.name?.charAt(0)"
@@ -53,7 +54,14 @@ import { FormsModule } from '@angular/forms';
             >
             }
           </div>
-
+          <img
+            class="object-cover w-full rounded-lg lg:hidden  max-h-96 overflow-hidden mb-6"
+            [src]="
+              starterKitStore.starterKit()?.kit_image ||
+              'https://via.placeholder.com/500'
+            "
+            alt="Boilerplate Image"
+          />
           <p
             class="text-gray-900 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 my-"
           >
@@ -89,13 +97,6 @@ import { FormsModule } from '@angular/forms';
                 >
               </span>
             </div>
-            @if(starterKitStore.starterKit()?.website){
-            <a
-              class="hover:underline font-semibold"
-              [href]="starterKitStore.starterKit()?.website"
-              >{{ starterKitStore.starterKit()?.website }}</a
-            >
-            }
           </div>
           <p class="font-semibold text-lg">
             <span>Pricing: &nbsp;</span>
@@ -107,15 +108,27 @@ import { FormsModule } from '@angular/forms';
             >}
           </p>
           <div class="flex items-center mt-4">
+          @if(starterKitStore.starterKit()?.website){
+              <!-- Black button -->
             <button
-              class="bg-white text-black px-4 py-2 rounded-md hover:bg-gray-100 transition flex items-center"
+              class="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition flex items-center mr-4"
+              [routerLink]="starterKitStore.starterKit()?.website"
+            >
+            <i class="pi pi-external-link mr-2"></i>
+
+              Visit Website
+            </button>
+            }
+            <button
+              class="bg-white text-black px-4 py-2 rounded-md hover:bg-gray-100 transition flex items-center border"
             >
               <i class="pi pi-bookmark mr-2"></i>
               {{ starterKitStore.starterKit()?.bookmarks?.[0]?.count }}
             </button>
+            
           </div>
         </div>
-        <div class="w-1/2 px-4 h-96 overflow-hidden">
+        <div class="w-full lg:w-[calc(50%-.5rem)] hidden lg:block max-h-96 overflow-hidden">
           <img
             class="object-cover w-full h-full rounded-lg"
             [src]="
@@ -137,6 +150,7 @@ import { FormsModule } from '@angular/forms';
       ></app-reviews>
       <app-similar-kits
         [tags]="starterKitStore.starterKit()?.tags || []"
+        [starterKitId]="starterKitStore.starterKit()?.id || 0"
       ></app-similar-kits>
       } @placeholder {
       <p>Loading...</p>
@@ -153,6 +167,7 @@ import { FormsModule } from '@angular/forms';
     NgPluralCase,
     NgPlural,
     TitleCasePipe,
+    RouterLink,
     FormsModule,
   ],
 })

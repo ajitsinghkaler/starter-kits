@@ -33,11 +33,22 @@ import { TitleCasePipe } from '@angular/common';
       @if (starterKitStore.writeReview()) {
       <app-submit-review></app-submit-review>
       }
-      <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 mb-20"
-      >
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 mb-20">
         @for (review of reviews(); track $index) {
         <app-reviews-card [reviewData]="review"></app-reviews-card>
+        } @empty {
+        <p class="text-lg">
+          There are no reviews yet. Be the
+          <span
+            (click)="starterKitStore.startWritingReview()"
+            (keyup.enter)="starterKitStore.startWritingReview()"
+            tabindex="0"
+            role="button"
+            class="font-bold hover:underline cursor-pointer"
+            >first</span
+          >
+          to review
+        </p>
         }
       </div>
     </div>

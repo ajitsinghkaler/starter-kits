@@ -9,6 +9,7 @@ import { RatingModule } from 'primeng/rating';
   selector: 'app-submit-review',
   standalone: true,
   imports: [FormsModule, InputTextareaModule, RatingModule],
+  providers: [ReviewService],
   template: `
     <div class="max-w-3xl mb-20 mt-6 mx-auto">
       <form
@@ -18,7 +19,6 @@ import { RatingModule } from 'primeng/rating';
             submitReviewForm,
             this.starterKitStore.starterKit()?.id
           );
-          starterKitStore.stopWritingReview()
         "
         class="flex flex-col gap-4 "
       >
@@ -45,6 +45,7 @@ import { RatingModule } from 'primeng/rating';
         <button
           class="bg-black text-white px-4 py-2 hover:bg-gray-900 transition rounded max-w-32 w-full self-end	"
           type="submit"
+          
         >
           Submit
         </button>

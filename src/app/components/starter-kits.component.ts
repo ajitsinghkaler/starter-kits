@@ -9,12 +9,14 @@ import { StarterKitsStore } from '../stores/starter-kits.store';
   imports: [TabViewModule, StarterKitCardsComponent],
   template: `
     <div class="container mx-auto">
-      <p-tabView>
-        <p-tabPanel header="Features">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <p-tabView (activeIndexChange)="changeTab($event)">
+        <p-tabPanel header="Featured">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          >
             @if(store.isLoading()){
             <p>Loading...</p>
-            } @else{ @for (starterKit of store.staterKits(); track $index) {
+            } @else{ @for (starterKit of store.starterKits(); track $index) {
             <app-starter-kit-cards
               [starterKit]="starterKit"
             ></app-starter-kit-cards>
@@ -22,15 +24,20 @@ import { StarterKitsStore } from '../stores/starter-kits.store';
           </div>
         </p-tabPanel>
         @defer (on immediate; prefetch on idle) {
-        <p-tabPanel header="New">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            @for (starterKit of store.staterKits(); track $index) {
-            <app-starter-kit-cards
-
-              [starterKit]="starterKit"
-            ></app-starter-kit-cards>
-            }
-          </div>
+        <p-tabPanel header="Latest">
+          <ng-template pTemplate="content">
+            <div
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            >
+              @if(store.isLoading()){
+              <p>Loading...</p>
+              } @else{ @for (starterKit of store.starterKits(); track $index) {
+              <app-starter-kit-cards
+                [starterKit]="starterKit"
+              ></app-starter-kit-cards>
+              }}
+            </div>
+          </ng-template>
         </p-tabPanel>
         }
       </p-tabView>
@@ -40,5 +47,17 @@ import { StarterKitsStore } from '../stores/starter-kits.store';
 })
 export class StarterKitsComponent {
   readonly store = inject(StarterKitsStore);
-  starterKits = this.store.loadStarterKits();
+  starterKits = this.store.starterKitFiltered({ featured: true });
+
+  changeTab(event: number) {
+    const filters = this.store.filters();
+    if (event === 0) {
+      filters.featured = true;
+      delete filters.new;
+    } else {
+      filters.new = true;
+      delete filters.featured;
+    }
+    this.store.starterKitFiltered({ ...filters });
+  }
 }

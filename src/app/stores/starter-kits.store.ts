@@ -3,25 +3,19 @@ import { StarterKit } from '../models/starter-kit';
 import { inject } from '@angular/core';
 import { Filters, StarterKitsService } from '../services/starter-kits.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  from,
-  pipe,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { debounceTime, from, pipe, switchMap, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
+import { Tag } from '../models/tag';
 
 type StaterKitsState = {
-  staterKits: StarterKit[];
+  starterKits: StarterKit[];
   isLoading: boolean;
   isError: boolean;
   filters: Partial<Filters>;
 };
 
 const initialState: StaterKitsState = {
-  staterKits: [],
+  starterKits: [],
   isLoading: false,
   isError: false,
   filters: {},
@@ -31,23 +25,16 @@ export const StarterKitsStore = signalStore(
   withState(initialState),
 
   withMethods((store, starterKitService = inject(StarterKitsService)) => ({
-    async loadStarterKits(): Promise<void> {
-      patchState(store, { isLoading: true });
-
-      const starterKits = (await starterKitService.getStarterKits({})) || [];
-      patchState(store, { staterKits: starterKits, isLoading: false });
-    },
     starterKitFiltered: rxMethod(
       pipe(
         tap((filters) => patchState(store, { filters })),
         debounceTime(300),
-        distinctUntilChanged(),
         tap(() => patchState(store, { isLoading: true })),
         switchMap((filters: Filters) => {
           console.log('filters', filters);
           return from(starterKitService.getStarterKits(filters)).pipe(
             tapResponse({
-              next: (staterKits) => patchState(store, { staterKits }),
+              next: (starterKits) => patchState(store, { starterKits }),
               error: () => patchState(store, { isError: true }),
               finalize: () => patchState(store, { isLoading: false }),
             })
@@ -55,5 +42,21 @@ export const StarterKitsStore = signalStore(
         })
       )
     ),
+    async loadStarterKitsTags(tags: Tag[], starterKitId): Promise<void> {
+      patchState(store, { isLoading: true });
+      const { data, error } = await starterKitService.getStarterKitsTags(
+        tags.map((tag) => tag.id), starterKitId
+      );
+
+      if (error) {
+        patchState(store, {
+          starterKits: [],
+          isError: true,
+          isLoading: false,
+        })
+        return;
+      }
+      patchState(store, { starterKits: data, isLoading: false });
+    },
   }))
 );

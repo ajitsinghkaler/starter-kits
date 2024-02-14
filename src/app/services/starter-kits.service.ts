@@ -7,7 +7,7 @@ import { Bookmark, ReviewsCount } from '../stores/starter-kit.store';
 export interface Filters {
   name: string;
   tags: string;
-  pricing_type: "Free" | "Paid";
+  pricing_type: 'Free' | 'Paid';
   featured: boolean;
   new: boolean;
 }
@@ -62,7 +62,7 @@ export class StarterKitsService {
             query = query.filter('featured', 'eq', filterValue);
             break;
           case 'new':
-            query = query.filter('new', 'eq', filterValue);
+            query = query.order('id', { ascending: false });
             break;
           default:
             break;
@@ -94,6 +94,15 @@ export class StarterKitsService {
     });
   }
 
+  async getStarterKitsTags(tags: number[], starterKitId: number) {
+    return this.supabaseService.supabase
+      .from('starter_kits')
+      .select(`*`)
+      .neq('id', starterKitId.toString())
+      .filter('tags.id', 'in', `(3)`)
+      .returns<StarterKit[]>();
+  }
+
   getStarterKitById(id: number) {
     return this.supabaseService.supabase
       .from('starter_kits')
@@ -107,7 +116,6 @@ export class StarterKitsService {
         ),
       bookmarks: profile!saved_starter_kits(count),
       reviewsCount: reviews(count)`
-      
       )
       .eq('id', id)
       .single<StarterKit & Bookmark & ReviewsCount>();

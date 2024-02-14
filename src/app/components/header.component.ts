@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { GlobalStore } from '../stores/global.store';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +8,9 @@ import { RouterLink } from '@angular/router';
   imports: [RouterLink],
   template: `
     <header class="border-b">
-      <nav class="container mx-auto flex items-center justify-between flex-wrap py-2 px-4">
+      <nav
+        class="container mx-auto flex items-center justify-between flex-wrap py-2 px-4"
+      >
         <div class="flex items-center flex-shrink-0 text-white mr-6">
           <a
             routerLink="/"
@@ -22,22 +25,18 @@ import { RouterLink } from '@angular/router';
         </div>
         <div class="block lg:hidden">
           <button
-            class="flex items-center px-3 py-2 border rounded text-slate-400 border-slate-200 hover:text-white hover:bg-zinc-100"
-            (click)="isMenuOpen = !isMenuOpen"
+            class="flex items-center px-3 py-2 border rounded text-slate-700 border-slate-200 hover:bg-zinc-100"
+            (click)="globalStore.isMenuOpen = !globalStore.isMenuOpen"
           >
-            <svg
-              class="h-3 w-3"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/8000/svg"
-            >
-              <title>Menu</title>
-              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v15z" />
-            </svg>
+           <i class="pi pi-bars"></i>
           </button>
         </div>
         <div
           class="w-full block md:grow-0 grow  lg:flex lg:items-center lg:w-auto font-semibold"
-          [class]="{ hidden: !isMenuOpen, block: isMenuOpen }"
+          [class]="{
+            hidden: !globalStore.isMenuOpen,
+            block: globalStore.isMenuOpen
+          }"
         >
           <div class="text-sm">
             <a
@@ -72,12 +71,5 @@ import { RouterLink } from '@angular/router';
   styles: ``,
 })
 export class HeaderComponent {
-  isMenuOpen = false;
-
-  items = [
-    {
-      label: 'File',
-      icon: 'pi pi-fw pi-file',
-    },
-  ];
+  globalStore = inject(GlobalStore);
 }
