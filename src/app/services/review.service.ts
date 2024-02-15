@@ -8,20 +8,20 @@ export class ReviewService {
   supabaseService = inject(SupabaseService);
   starterKitStore = inject(StarterKitStore);
   async createReview(form: NgForm, starter_kit_id: number | undefined) {
+    form.form.markAllAsTouched();
     const value = form.value;
-
-    console.log('value', value, starter_kit_id);
-
-    return this.supabaseService.supabase
-      .from('reviews')
-      .insert({
-        review_text: value.review_text,
-        rating: value.rating,
-        starter_kit: starter_kit_id,
-      })
-      .then(() => {
-        this.starterKitStore.loadStarterKit(starter_kit_id || 0);
-        this.starterKitStore.stopWritingReview();
-      });
+    if (form.valid) {
+      return this.supabaseService.supabase
+        .from('reviews')
+        .insert({
+          review_text: value.review_text,
+          rating: value.rating,
+          starter_kit: starter_kit_id,
+        })
+        .then(() => {
+          this.starterKitStore.loadStarterKit(starter_kit_id || 0);
+          this.starterKitStore.stopWritingReview();
+        });
+    }
   }
 }

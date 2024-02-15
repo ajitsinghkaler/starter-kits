@@ -13,6 +13,6 @@
 }
 @tailwind utilities;
 
-
-
-// @layer primeng;
+:not(form).ng-touched.ng-invalid {
+  @apply border-red-500 text-red-500;
+}

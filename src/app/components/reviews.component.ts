@@ -4,6 +4,7 @@ import { Review } from '../models/review';
 import { SubmitReviewComponent } from './submit-review.component';
 import { StarterKitStore } from '../stores/starter-kit.store';
 import { TitleCasePipe } from '@angular/common';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-reviews',
@@ -24,7 +25,7 @@ import { TitleCasePipe } from '@angular/common';
         } @else {
         <button
           class="bg-black text-white px-4 py-2 hover:bg-gray-900 transition flex items-center rounded"
-          (click)="starterKitStore.startWritingReview()"
+          (click)="writeReview()"
         >
           Write a review
         </button>
@@ -53,9 +54,26 @@ import { TitleCasePipe } from '@angular/common';
       </div>
     </div>
   `,
-  imports: [ReviewsCardComponent, SubmitReviewComponent, TitleCasePipe],
+  imports: [
+    ReviewsCardComponent,
+    SubmitReviewComponent,
+    TitleCasePipe,
+  ],
 })
 export class ReviewsComponent {
   reviews = input.required<Review[]>();
   starterKitStore = inject(StarterKitStore);
+  authService = inject(AuthService);
+
+  writeReview() {
+    if (this.authService.userState().user) {
+      this.starterKitStore.startWritingReview();
+    } else {
+      // this.messageService.add({
+      //   severity: 'error',
+      //   summary: 'Not Logged In',
+      //   detail: 'Please login to write a review.',
+      // });
+    }
+  }
 }

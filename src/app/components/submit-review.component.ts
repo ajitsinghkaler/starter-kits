@@ -17,35 +17,51 @@ import { RatingModule } from 'primeng/rating';
         (ngSubmit)="
           reviewService.createReview(
             submitReviewForm,
-            this.starterKitStore.starterKit()?.id
-          );
+            starterKitStore.starterKit()?.id
+          )
         "
         class="flex flex-col gap-4 "
       >
-        <div class="flex ">
+        <div>
+          <div class="flex items-center">
           Your Star Rating:
           <p-rating
             class="ml-4"
             name="rating"
             [cancel]="false"
+            required
             ngModel
+            #rating="ngModel"
           ></p-rating>
+          </div>
+          @if(rating.touched && rating.invalid){
+        <div class="text-red-500 text-sm mt-2">
+          Please give a rating to the boiler plate.
         </div>
+        }
+        </div>
+        
 
         <div class="flex flex-col">
           <textarea
             ngModel
             rows="5"
             pInputTextarea
+            #reviewText="ngModel"
+            required
             id="review"
             name="review_text"
             placeholder="Write your review here..."
           ></textarea>
+          @if(reviewText.touched && reviewText.invalid){
+          <div class="text-red-500 text-sm mt-2">
+            Please write some review text before submitting.
+          </div>
+          }
         </div>
         <button
           class="bg-black text-white px-4 py-2 hover:bg-gray-900 transition rounded max-w-32 w-full self-end	"
           type="submit"
-          
         >
           Submit
         </button>

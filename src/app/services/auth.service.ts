@@ -20,8 +20,16 @@ export class AuthService {
   supabaseService = inject(SupabaseService);
 
   constructor() {
-    this.getUser();
+    this.authChanges((_, session) => {
+      // console.log('session', session, _);
+      patchState(this.userState, () => ({ user: session?.user }));
+    });
   }
+
+  get session() {
+    return this.supabaseService.supabase.auth.getSession();
+  }
+  
 
   authChanges(
     callback: (event: AuthChangeEvent, session: Session | null) => void
@@ -71,14 +79,4 @@ export class AuthService {
     });
   }
 
-  /**
-   * Retrieves the currently authenticated user.
-   * @returns {Promise<SupabaseUser | null>} A promise that resolves to the authenticated user or null if no user is authenticated.
-   */
-  async getUser() {
-    return await this.supabaseService.supabase.auth.getUser().then((res) => {
-      patchState(this.userState, () => ({ user: res.data.user }));
-      return res;
-    });
-  }
 }

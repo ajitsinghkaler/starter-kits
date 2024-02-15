@@ -17,7 +17,11 @@ import { AuthService } from '../services/auth.service';
     RouterLink,
   ],
   template: `
-    <form class="block" #loginForm="ngForm" (ngSubmit)="authService.loginEmail(loginForm)">
+    <form
+      class="block"
+      #loginForm="ngForm"
+      (ngSubmit)="authService.loginEmail(loginForm)"
+    >
       <h2 class="text-center text-2xl py-4	font-semibold">Login to Continue</h2>
       <div class="flex flex-col gap-2">
         <label class="text-slate-700 text-sm" for="email">Email</label>

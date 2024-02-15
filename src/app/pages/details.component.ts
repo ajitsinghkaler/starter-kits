@@ -5,6 +5,7 @@ import { SimilarKitsComponent } from '../components/similar-kits.component';
 import { StarterKitStore } from '../stores/starter-kit.store';
 import { SkeletonModule } from 'primeng/skeleton';
 import { DetailsStaterKitComponent } from '../components/details-stater-kit.component';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-details',
@@ -30,7 +31,10 @@ import { DetailsStaterKitComponent } from '../components/details-stater-kit.comp
         </div>
       </div>
       } @else{
-      <app-details-stater-kit [starterKit]="starterKitStore.starterKit()" [avgRating]="starterKitStore.avgRating()"></app-details-stater-kit>
+      <app-details-stater-kit
+        [starterKit]="starterKitStore.starterKit()"
+        [avgRating]="starterKitStore.avgRating()"
+      ></app-details-stater-kit>
       @defer (on viewport; prefetch on idle) {
       <app-reviews
         [reviews]="starterKitStore.starterKit()?.reviews || []"
@@ -46,17 +50,16 @@ import { DetailsStaterKitComponent } from '../components/details-stater-kit.comp
   `,
   styles: ``,
   imports: [
-
     ReviewsComponent,
     SimilarKitsComponent,
     SkeletonModule,
-   DetailsStaterKitComponent
-
+    DetailsStaterKitComponent,
   ],
 })
 export class DetailsComponent implements OnInit {
   starterKitId = input<number>(0);
   starterKitStore = inject(StarterKitStore);
+  authServices = inject(AuthService);
   ngOnInit() {
     this.starterKitStore.loadStarterKit(this.starterKitId());
   }

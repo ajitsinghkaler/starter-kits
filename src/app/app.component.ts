@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header.component';
 import { FooterComponent } from './components/footer.component';
 import { GlobalStore } from './stores/global.store';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -22,4 +23,5 @@ import { GlobalStore } from './stores/global.store';
 })
 export class AppComponent {
   globalStore = inject(GlobalStore);
+  authService = inject(AuthService);
 }
