@@ -88,8 +88,8 @@ export class StarterKitsService {
       website: value.website,
       description: value.description,
       short_description: value.description,
-      price: 10,
-      pricing_type: 'Paid',
+      price: value.price,
+      pricing_type: value.pricing_type,
       kit_image: value.image,
     });
   }

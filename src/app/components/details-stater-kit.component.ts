@@ -106,7 +106,7 @@ import { Bookmark, ReviewsCount } from '../stores/starter-kit.store';
         />
       </div>
     </div>
-    <div class="mx-auto w-full max-w-7xl mb-40">
+    <div class="mx-auto w-full mb-40">
       <p class="my-8">
         {{ starterKit()?.description }}
       </p>

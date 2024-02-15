@@ -13,7 +13,7 @@ import { CardSkeletonComponent } from './card-skeleton.component';
         <p-tabPanel header="Featured">
           <div
             class="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-            [class.grid]="store.starterKits().length"
+            [class.grid]="store.starterKits().length || store.isLoading()"
           >
             @if(store.isLoading()){ @for (i of [1, 2, 3]; track $index) {
             <app-card-skeleton></app-card-skeleton>
@@ -24,7 +24,7 @@ import { CardSkeletonComponent } from './card-skeleton.component';
             ></app-starter-kit-cards>
             } @empty {
           <p class="text-lg text-center font-bold">
-              There are no boilerplates for your search criteria.
+              There are no featured boilerplates for your search criteria.
             </p>
             }}
           </div>
@@ -34,7 +34,7 @@ import { CardSkeletonComponent } from './card-skeleton.component';
           <ng-template pTemplate="content">
             <div
               class="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-              [class.grid]="store.starterKits().length"
+              [class.grid]="store.starterKits().length || store.isLoading()"
             >
               @if(store.isLoading()){
               <app-card-skeleton></app-card-skeleton>

@@ -8,9 +8,10 @@ import { StarterKitsStore } from '../stores/starter-kits.store';
   standalone: true,
   imports: [DropdownModule, FormsModule],
   template: `
-    <div class="container flex justify-between mx-auto">
+    <div class="container block justify-between mx-auto">
       <div>
         <p-dropdown
+        styleClass="min-w-48"
           [options]="pricingType"
           [ngModel]="starterKitStore.filters().pricing_type"
           (ngModelChange)="filterByPricingType($event)"

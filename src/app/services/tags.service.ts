@@ -11,7 +11,7 @@ export class TagsService {
   async getTags() {
     return this.supabaseService.supabase
       .from('tags')
-      .select('*')
-      .returns<Tag[]>();
+      .select('*', { count: 'exact'})
+      .limit(10).returns<Tag[]>()
   }
 }
