@@ -9,7 +9,7 @@ import { TitleCasePipe } from '@angular/common';
   selector: 'app-reviews',
   standalone: true,
   template: `
-    <div class="container mx-auto">
+    <div>
       <div class="flex items-center justify-between">
         <h2 class="text-xl font-bold tracking-tighter sm:text-3xl my-6">
           {{ starterKitStore.starterKit()?.name | titlecase }} Reviews
@@ -47,7 +47,7 @@ import { TitleCasePipe } from '@angular/common';
             class="font-bold hover:underline cursor-pointer"
             >first</span
           >
-          to review
+          to write a review
         </p>
         }
       </div>

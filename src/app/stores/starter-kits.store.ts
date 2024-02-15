@@ -56,7 +56,7 @@ export const StarterKitsStore = signalStore(
         })
         return;
       }
-      patchState(store, { starterKits: data, isLoading: false });
+      patchState(store, { starterKits: data.map(item => item.starter_kits), isLoading: false });
     },
   }))
 );

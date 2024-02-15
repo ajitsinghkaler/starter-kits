@@ -12,7 +12,7 @@ import { StarterKitsService } from '../services/starter-kits.service';
   template: `
     <form
       #starterKitForm="ngForm"
-      class="space-y-6 rounded-lg px-4 sm:px-8 pt-6 pb-12 container mx-auto mt-12 mb-40 bg-white"
+      class="space-y-6 max-w-4xl rounded-lg px-4 sm:px-8 pt-6 pb-12 container mx-auto mt-12 mb-40 bg-white"
     >
       <h1 class="text-3xl font-bold text-gray-900 mb-8">
         Submit a Boilerplate

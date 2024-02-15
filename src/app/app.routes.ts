@@ -54,11 +54,6 @@ export const routes: Routes = [
       import('./pages/contact.component').then((c) => c.ContactComponent),
   },
   {
-    path:'counter',
-    loadComponent: () =>
-      import('./components/counter.component').then((c) => c.CounterComponent),
-  },
-  {
     path:'**',
     loadComponent: () =>
       import('./pages/not-found.component').then((c) => c.NotFoundComponent),

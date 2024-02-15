@@ -96,11 +96,11 @@ export class StarterKitsService {
 
   async getStarterKitsTags(tags: number[], starterKitId: number) {
     return this.supabaseService.supabase
-      .from('starter_kits')
-      .select(`*`)
-      .neq('id', starterKitId.toString())
-      .filter('tags.id', 'in', `(3)`)
-      .returns<StarterKit[]>();
+      .from('starter_kit_tags')
+      .select(`starter_kits(*, tags(*))`)
+      .neq('starter_kit', starterKitId.toString())
+      .filter('tags', 'in', `(${tags.join(',')})`)
+      .returns<{ starter_kits: StarterKit }[]>()
   }
 
   getStarterKitById(id: number) {
