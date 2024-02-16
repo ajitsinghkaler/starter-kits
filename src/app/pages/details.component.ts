@@ -31,10 +31,7 @@ import { AuthService } from '../services/auth.service';
         </div>
       </div>
       } @else{
-      <app-details-stater-kit
-        [starterKit]="starterKitStore.starterKit()"
-        [avgRating]="starterKitStore.avgRating()"
-      ></app-details-stater-kit>
+      <app-details-stater-kit></app-details-stater-kit>
       @defer (on viewport; prefetch on idle) {
       <app-reviews
         [reviews]="starterKitStore.starterKit()?.reviews || []"
@@ -62,5 +59,11 @@ export class DetailsComponent implements OnInit {
   authServices = inject(AuthService);
   ngOnInit() {
     this.starterKitStore.loadStarterKit(this.starterKitId());
+    if (this.authServices.userState()?.user?.id) {
+      this.starterKitStore.getBookMarkStatus(
+        this.starterKitId(),
+        this.authServices.userState()?.user?.id || ''
+      );
+    }
   }
 }

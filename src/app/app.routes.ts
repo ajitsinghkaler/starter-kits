@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
+import { loggedOutGuard } from './guards/logged-out.guard';
 
 export const routes: Routes = [
   {
@@ -9,6 +10,7 @@ export const routes: Routes = [
   },
   {
     path:'auth',
+    canActivate: [loggedOutGuard],
     loadComponent: () =>
       import('./pages/auth.component').then((c) => c.AuthComponent),
       children: [
@@ -41,8 +43,10 @@ export const routes: Routes = [
   },
   {
     path: 'submit',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./pages/submit.component').then((c) => c.SubmitComponent),
+    
   },
   {
     path:'profile',

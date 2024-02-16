@@ -4,5 +4,5 @@ import { AuthService } from '../services/auth.service';
 
 export const loggedOutGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
-  return !authService.userState().user;
+  return !authService.isAuthenticated();
 };

@@ -12,12 +12,13 @@ import { FormsModule } from '@angular/forms';
     <div class="rounded-lg bg-white p-6 shadow-md border-gray-100 border">
       <div class="flex items-center">
         <p-avatar
-          styleClass="mr-2"
+          styleClass="mr-4"
           size="large"
           label="{{ reviewData().profile.full_name?.charAt(0) || 'R' }}"
         ></p-avatar>
         <div class="flex">
           <p-rating
+        
             [ngModel]="reviewData().rating"
             [readonly]="true"
             [cancel]="false"

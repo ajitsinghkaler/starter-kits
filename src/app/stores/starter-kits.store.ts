@@ -42,10 +42,16 @@ export const StarterKitsStore = signalStore(
         })
       )
     ),
-    async loadStarterKitsTags(tags: Tag[], starterKitId): Promise<void> {
+    async loadStarterKitsTags(
+      tags: Tag[],
+      starterKitId,
+      limit = 8
+    ): Promise<void> {
       patchState(store, { isLoading: true });
       const { data, error } = await starterKitService.getStarterKitsTags(
-        tags.map((tag) => tag.id), starterKitId
+        tags.map((tag) => tag.id),
+        starterKitId,
+        limit
       );
 
       if (error) {
@@ -53,10 +59,13 @@ export const StarterKitsStore = signalStore(
           starterKits: [],
           isError: true,
           isLoading: false,
-        })
+        });
         return;
       }
-      patchState(store, { starterKits: data.map(item => item.starter_kits), isLoading: false });
+      patchState(store, {
+        starterKits: data.map((item) => item.starter_kits),
+        isLoading: false,
+      });
     },
   }))
 );

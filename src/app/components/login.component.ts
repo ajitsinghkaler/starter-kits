@@ -5,6 +5,7 @@ import { PasswordModule } from 'primeng/password';
 import { DividerModule } from 'primeng/divider';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ import { AuthService } from '../services/auth.service';
     PasswordModule,
     DividerModule,
     RouterLink,
+    ToastModule
   ],
   template: `
     <form

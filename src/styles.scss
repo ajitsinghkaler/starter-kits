@@ -16,3 +16,7 @@
 :not(form).ng-touched.ng-invalid {
   @apply border-red-500 text-red-500;
 }
+
+.p-rating-item-active .p-rating-icon {
+  @apply text-amber-400;
+}

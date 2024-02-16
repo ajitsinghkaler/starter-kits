@@ -5,11 +5,14 @@ import { SubmitReviewComponent } from './submit-review.component';
 import { StarterKitStore } from '../stores/starter-kit.store';
 import { TitleCasePipe } from '@angular/common';
 import { AuthService } from '../services/auth.service';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-reviews',
   standalone: true,
   template: `
+    <p-toast></p-toast>
     <div>
       <div class="flex items-center justify-between">
         <h2 class="text-xl font-bold tracking-tighter sm:text-3xl my-6">
@@ -58,22 +61,25 @@ import { AuthService } from '../services/auth.service';
     ReviewsCardComponent,
     SubmitReviewComponent,
     TitleCasePipe,
+    ToastModule,
   ],
+  providers: [MessageService],
 })
 export class ReviewsComponent {
   reviews = input.required<Review[]>();
   starterKitStore = inject(StarterKitStore);
   authService = inject(AuthService);
+  messageService = inject(MessageService);
 
   writeReview() {
-    if (this.authService.userState().user) {
+    if (this.authService.isAuthenticated()) {
       this.starterKitStore.startWritingReview();
     } else {
-      // this.messageService.add({
-      //   severity: 'error',
-      //   summary: 'Not Logged In',
-      //   detail: 'Please login to write a review.',
-      // });
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Not Logged In',
+        detail: 'You need to be logged in to write a review',
+      });
     }
   }
 }

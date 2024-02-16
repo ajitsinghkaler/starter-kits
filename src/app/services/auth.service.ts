@@ -11,12 +11,13 @@ import { AuthChangeEvent, Session, User } from '@supabase/supabase-js';
 import { patchState, signalState } from '@ngrx/signals';
 type UserState = {
   user: User | null;
+  authError: string | null;
 };
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  userState = signalState<UserState>({ user: null });
+  userState = signalState<UserState>({ user: null, authError: null });
   supabaseService = inject(SupabaseService);
 
   constructor() {
@@ -28,6 +29,10 @@ export class AuthService {
 
   get session() {
     return this.supabaseService.supabase.auth.getSession();
+  }
+
+  isAuthenticated() {
+    return !!this.userState().user;
   }
   
 
@@ -57,7 +62,9 @@ export class AuthService {
   }
 
   signOut() {
-    return this.supabaseService.supabase.auth.signOut();
+    return this.supabaseService.supabase.auth.signOut().then(()=>{
+      patchState(this.userState, () => ({ user: null }));
+    });
   }
 
   resetPassword(form: NgForm) {
