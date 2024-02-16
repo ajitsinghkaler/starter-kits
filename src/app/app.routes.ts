@@ -10,7 +10,7 @@ export const routes: Routes = [
   },
   {
     path:'auth',
-    canActivate: [loggedOutGuard],
+    canActivateChild: [loggedOutGuard],
     loadComponent: () =>
       import('./pages/auth.component').then((c) => c.AuthComponent),
       children: [

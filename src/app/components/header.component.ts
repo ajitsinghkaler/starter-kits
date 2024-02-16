@@ -40,30 +40,28 @@ import { AuthService } from '../services/auth.service';
           }"
         >
           <div class="text-sm">
-            <a
-              routerLink="/contact"
-              class="block mt-4 lg:inline-block lg:mt-0 hover:bg-zinc-100 px-4 py-2 rounded mr-4"
-            >
-              Contact
-            </a>
-            <a
-              routerLink="/profile"
-              class="block mt-4 lg:inline-block lg:mt-0 hover:bg-zinc-100 px-4 py-2 rounded mr-4"
-            >
-              Profile
-            </a>
+            @if (!authService.isAuthenticated()) {
             <a
               routerLink="/auth/login"
               class="block mt-4 lg:inline-block lg:mt-0 hover:bg-zinc-100 px-4 py-2 rounded mr-4"
             >
               Login
             </a>
+            } @else{
+            <a
+              routerLink="/profile"
+              class="block mt-4 lg:inline-block lg:mt-0 hover:bg-zinc-100 px-4 py-2 rounded mr-4"
+            >
+              Profile
+            </a>
+            
             <button
               (click)="authService.signOut()"
-              class="block mt-4 lg:inline-block lg:mt-0 hover:bg-zinc-100 px-4 py-2 rounded mr-4"
+              class="text-left w-full block mt-4 lg:inline-block lg:mt-0 hover:bg-zinc-100 px-4 py-2 rounded mr-4 lg:w-min"
             >
               Logout
             </button>
+            }
             <a
               routerLink="/submit"
               class="block mt-4 lg:inline-block lg:mt-0 lg:bg-slate-950 lg:hover:bg-zinc-800 hover:bg-zinc-100 lg:text-white px-4 py-2 rounded"

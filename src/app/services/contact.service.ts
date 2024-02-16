@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Injectable, inject } from '@angular/core';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare let Tally: any;
@@ -7,6 +8,7 @@ declare let Tally: any;
   providedIn: 'root',
 })
 export class ContactService {
+  document = inject(DOCUMENT)
   loaded: Promise<void> | null = null;
 
   init(): Promise<void> {
@@ -18,7 +20,7 @@ export class ContactService {
   private load(): Promise<void> {
     if (!this.loaded) {
       this.loaded = new Promise<void>((resolve, reject) => {
-        const script = document.createElement('script');
+        const script = this.document.createElement('script');
         script.type = 'text/javascript';
         script.src = 'https://tally.so/widgets/embed.js';
 
@@ -51,7 +53,7 @@ export class ContactService {
           };
         }
 
-        document.body.appendChild(script);
+        this.document.body.appendChild(script);
       });
     }
 

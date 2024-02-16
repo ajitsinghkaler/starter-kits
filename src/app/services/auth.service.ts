@@ -9,6 +9,7 @@ import { SupabaseService } from './supabase.service';
 import { NgForm } from '@angular/forms';
 import { AuthChangeEvent, Session, User } from '@supabase/supabase-js';
 import { patchState, signalState } from '@ngrx/signals';
+import { Router } from '@angular/router';
 type UserState = {
   user: User | null;
   authError: string | null;
@@ -17,6 +18,7 @@ type UserState = {
   providedIn: 'root',
 })
 export class AuthService {
+  router = inject(Router);
   userState = signalState<UserState>({ user: null, authError: null });
   supabaseService = inject(SupabaseService);
 
@@ -34,7 +36,6 @@ export class AuthService {
   isAuthenticated() {
     return !!this.userState().user;
   }
-  
 
   authChanges(
     callback: (event: AuthChangeEvent, session: Session | null) => void
@@ -55,15 +56,23 @@ export class AuthService {
 
   loginEmail(form: NgForm) {
     const { email, password } = form.value;
-    return this.supabaseService.supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
+    return this.supabaseService.supabase.auth
+      .signInWithPassword({
+        email: email,
+        password: password,
+      })
+      .then(() => {
+        this.router.navigate(['/']);
+      });
   }
 
   signOut() {
-    return this.supabaseService.supabase.auth.signOut().then(()=>{
+    return this.supabaseService.supabase.auth.signOut().then(() => {
       patchState(this.userState, () => ({ user: null }));
+      const currentUrl = this.router.url;
+      if (currentUrl === '/profile' || currentUrl === '/submit') {
+        this.router.navigate(['/auth/login']);
+      }
     });
   }
 
@@ -85,5 +94,4 @@ export class AuthService {
       password: password,
     });
   }
-
 }
