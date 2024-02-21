@@ -21,7 +21,6 @@ import { ChipModule } from 'primeng/chip';
               <h3 class="text-2xl font-semibold">{{ starterKit.name }}</h3>
               <div class="my-4">
               <p-rating
-              
                 [ngModel]="starterKit.rating"
                 [readonly]="true"
                 [cancel]="false"
@@ -29,7 +28,7 @@ import { ChipModule } from 'primeng/chip';
               </div>
               <div class="flex flow gap-2 py-4">
                 @for (tag of starterKit.tags; track $index) {
-                <p-chip [label]="tag.name"></p-chip>
+                <p-chip styleClass="text-sm" [label]="tag.name"></p-chip>
                 }
               </div>
               <p>{{ starterKit.short_description }}</p>

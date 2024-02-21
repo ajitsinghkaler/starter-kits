@@ -9,10 +9,14 @@ declare let Tally: any;
 })
 export class ContactService {
   document = inject(DOCUMENT)
+  loading = false;
   loaded: Promise<void> | null = null;
 
   init(): Promise<void> {
+    this.loading = true;
     return this.load().then(() => {
+      this.loading = false;
+
       Tally.loadEmbeds();
     });
   }
