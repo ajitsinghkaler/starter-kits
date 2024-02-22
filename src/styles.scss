@@ -20,3 +20,12 @@
 .p-rating-item-active .p-rating-icon {
   @apply text-amber-400;
 }
+
+
+p-dropdown.ng-invalid.ng-touched div {
+  @apply border-red-500 text-red-500;
+}
+
+p-multiselect.ng-invalid.ng-touched > div {
+  @apply border-red-500 text-red-500;
+}

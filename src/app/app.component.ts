@@ -13,11 +13,10 @@ import { ToastModule } from 'primeng/toast';
     <p-toast></p-toast>
     <app-header></app-header>
     <!-- eslint-disable-next-line @angular-eslint/template/interactive-supports-focus, @angular-eslint/template/click-events-have-key-events -->
-    <div (click)="globalStore.closeMenu()">
+    <div class="flex flex-col min-h-[calc(100vh-65px)]" (click)="globalStore.closeMenu()">
       <router-outlet></router-outlet>
       @defer (on immediate; prefetch on idle) {
       <app-footer class="block"></app-footer>
-
       }
     </div>
   </div>`,

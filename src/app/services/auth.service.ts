@@ -54,16 +54,19 @@ export class AuthService {
     });
   }
 
-  loginEmail(form: NgForm) {
+  async loginEmail(form: NgForm) {
     const { email, password } = form.value;
-    return this.supabaseService.supabase.auth
+    const {data, error} =  await this.supabaseService.supabase.auth
       .signInWithPassword({
         email: email,
         password: password,
       })
-      .then(() => {
-        this.router.navigate(['/']);
-      });
+data
+    if (error) {
+      return
+    }
+    this.router.navigate(['/']);
+
   }
 
   signOut() {

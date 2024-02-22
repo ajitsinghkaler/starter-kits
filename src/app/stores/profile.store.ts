@@ -8,6 +8,7 @@ import {
 import { inject } from '@angular/core';
 import { ProfileService } from '../services/profile.service';
 import { Profile } from '../models/profile';
+import { NgForm } from '@angular/forms';
 
 type ProfileStore = {
   profile: Profile | null;
@@ -16,9 +17,7 @@ type ProfileStore = {
 };
 
 export type EditProfileStatus = {
-  name: boolean;
-  email: boolean;
-  website: boolean;
+  edit: boolean;
 };
 
 const initialState: ProfileStore = {
@@ -43,49 +42,31 @@ export const ProfileStore = signalStore(
       }
       patchState(store, { profile: data, isLoading: false });
     },
+    async updateProfile(form: NgForm, userId) {
+      form.form.markAllAsTouched();
+      if (form.invalid) return;
+      const { data, error } = await profileService.updateProfile({...form.value}, userId);
+      if (error) {
+        patchState(store, { edit: false });
+        return;
+      }
+      data;
+      patchState(store, { edit: false, profile: data});
+    },
   }))
 );
 
 export function ProfileEdit() {
   return signalStoreFeature(
-    withState<EditProfileStatus>({ name: false, email: false, website: false }),
-    withMethods((store, profileService = inject(ProfileService)) => ({
-      editName() {
-        patchState(store, { name: true });
+    withState<EditProfileStatus>({ edit: false }),
+    withMethods((store) => ({
+      startEditing() {
+        patchState(store, { edit: true });
       },
-      async saveName(name: string) {
-        const { data, error } = await profileService.updateName(name);
-        if (error) {
-          patchState(store, { name: false });
-          return;
-        }
-        data
-        patchState(store, { name: false });
+      stopEditing() {
+        patchState(store, { edit: false });
       },
-      editEmail() {
-        patchState(store, { email: true });
-      },
-      async saveEmail(email: string) {
-        const { data, error } = await profileService.updateEmail(email);
-        if (error) {
-          patchState(store, { email: false });
-          return;
-        }
-        data
-        patchState(store, { email: false });
-      },
-      editWebsite() {
-        patchState(store, { website: true });
-      },
-      async saveWebsite(website: string) {
-        const { data, error } = await profileService.updateWebsite(website);
-        if (error) {
-          patchState(store, { website: false });
-          return;
-        }
-        data
-        patchState(store, { website: false });
-      },
+      
     }))
   );
 }

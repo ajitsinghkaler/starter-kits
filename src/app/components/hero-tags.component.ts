@@ -45,7 +45,6 @@ import { StarterKitsStore } from '../stores/starter-kits.store';
 export class HeroTagsComponent {
   tagStore = inject(TagStore);
   starterKitsStore = inject(StarterKitsStore);
-  tags = this.tagStore.loadTags();
   filterByTag(tags: number) {
     this.starterKitsStore.starterKitFiltered({
       ...this.starterKitsStore.filters(),

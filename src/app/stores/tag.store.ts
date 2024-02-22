@@ -2,6 +2,7 @@ import {
   patchState,
   signalStore,
   withComputed,
+  withHooks,
   withMethods,
   withState,
 } from '@ngrx/signals';
@@ -56,5 +57,10 @@ export const TagStore = signalStore(
     showTagsLess() {
       patchState(store, { showAllTags: false });
     },
-  }))
+  })),
+  withHooks({
+    onInit({ loadTags }) {
+      loadTags();
+    },
+  })
 );

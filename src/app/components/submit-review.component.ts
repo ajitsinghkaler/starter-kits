@@ -24,23 +24,22 @@ import { RatingModule } from 'primeng/rating';
       >
         <div>
           <div class="flex items-center">
-          Your Star Rating:
-          <p-rating
-            class="ml-4"
-            name="rating"
-            [cancel]="false"
-            required
-            ngModel
-            #rating="ngModel"
-          ></p-rating>
+            Your Star Rating:
+            <p-rating
+              class="ml-4"
+              name="rating"
+              [cancel]="false"
+              required
+              ngModel
+              #rating="ngModel"
+            ></p-rating>
           </div>
           @if(rating.touched && rating.invalid){
-        <div class="text-red-500 text-sm mt-2">
-          Please give a rating to the boiler plate.
+          <div class="text-red-500 text-sm mt-2">
+            Please give a rating to the boiler plate.
+          </div>
+          }
         </div>
-        }
-        </div>
-        
 
         <div class="flex flex-col">
           <textarea

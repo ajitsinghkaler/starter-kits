@@ -91,6 +91,8 @@ export class StarterKitsService {
   }
 
   async createStarterKit(form: NgForm) {
+    form.form.markAllAsTouched();
+    if (form.invalid) return;
     const value = form.value;
     return this.supabaseService.supabase.from('starter_kits').insert({
       name: value.name,

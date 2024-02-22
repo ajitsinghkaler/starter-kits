@@ -19,23 +19,21 @@ export class ProfileService {
       .single<Profile>();
   }
 
-  updateName(name: string) {
+  updateProfile(profile: Profile, id: string) {
     return this.supabaseService.supabase
       .from('profile')
-      .update({ full_name: name })
-      .eq('id', this.authService.userState().user?.id);
+      .update({...profile, id})
+      .match({ id }).select()
+      .single<Profile>();
   }
 
-  updateWebsite(website: string) {
-    return this.supabaseService.supabase
-      .from('profile')
-      .update({ website })
-      .eq('id', this.authService.userState().user?.id);
+  downLoadImage(path: string) {
+    return this.supabaseService.supabase.storage.from('avatars').download(path);
   }
-  updateEmail(email: string) {
-    return this.supabaseService.supabase
-      .from('profile')
-      .update({ email })
-      .eq('id', this.authService.userState().user?.id);
+
+  uploadAvatar(filePath: string, file: File) {
+    return this.supabaseService.supabase.storage
+      .from('avatars')
+      .upload(filePath, file);
   }
 }
