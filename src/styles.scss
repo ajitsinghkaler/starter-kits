@@ -14,7 +14,7 @@
 @tailwind utilities;
 
 :not(form).ng-touched.ng-invalid {
-  @apply border-red-500 text-red-500;
+  @apply border-red-500;
 }
 
 .p-rating-item-active .p-rating-icon {
@@ -23,11 +23,11 @@
 
 
 p-dropdown.ng-invalid.ng-touched div {
-  @apply border-red-500 text-red-500;
+  @apply border-red-500;
 }
 
 p-multiselect.ng-invalid.ng-touched > div {
-  @apply border-red-500 text-red-500;
+  @apply border-red-500;
 }
 
 .p-multiselect .p-multiselect-trigger{
@@ -35,5 +35,5 @@ p-multiselect.ng-invalid.ng-touched > div {
 }
 
 p-password.ng-invalid.ng-touched > .p-password > .p-inputtext{
-  @apply border-red-500 text-red-500;
+  @apply border-red-500;
 }

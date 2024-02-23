@@ -16,7 +16,7 @@ import { ToastModule } from 'primeng/toast';
     PasswordModule,
     DividerModule,
     RouterLink,
-    ToastModule
+    ToastModule,
   ],
   template: `
     <form
@@ -27,11 +27,32 @@ import { ToastModule } from 'primeng/toast';
       <h2 class="text-center text-2xl py-4	font-semibold">Login to Continue</h2>
       <div class="flex flex-col gap-2">
         <label class="text-slate-700 text-sm" for="email">Email</label>
-
-        <input id="email" required name="email" placeholder="Email" pInputText ngModel />
+        <div>
+          <input
+            #email="ngModel"
+            pattern="[a-z0-9._%+\\-]+@[a-z0-9.\\-]+[.][a-z]{2,}$"
+            id="email"
+            required
+            name="email"
+            placeholder="Email"
+            class="w-full"
+            pInputText
+            ngModel
+          />
+          @if(email.touched && email.errors?.["pattern"]){
+          <div class="text-red-500 text-sm mt-2">
+            Please enter a valid email address.
+          </div>
+          } @if(email.touched && email.errors?.["required"]){
+          <div class="text-red-500 text-sm mt-2">
+            Email is required for login.
+          </div>
+          }
+        </div>
       </div>
       <div class="flex flex-col gap-2 mt-4">
         <label class="text-slate-700 text-sm" for="password">Password</label>
+        <div>
         <p-password
           name="password"
           inputId="password"
@@ -43,6 +64,12 @@ import { ToastModule } from 'primeng/toast';
           [inputStyle]="{ width: '100%' }"
           [feedback]="false"
         ></p-password>
+        @if(email.touched && email.invalid){
+          <div class="text-red-500 text-sm mt-2">
+            Please enter a password.
+          </div>
+          }
+        </div>
       </div>
       <button
         class="bg-black text-white rounded shadow py-3 w-full font-bold mt-6 hover:bg-gray-800"
