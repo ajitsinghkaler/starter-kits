@@ -80,6 +80,5 @@ import { RouterLink } from '@angular/router';
       </div>
     </footer>
   `,
-  styles: ``,
-})
+  })
 export class FooterComponent {}

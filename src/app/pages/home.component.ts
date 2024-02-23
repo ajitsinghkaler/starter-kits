@@ -15,7 +15,6 @@ import { StarterKitsStore } from '../stores/starter-kits.store';
     <app-starter-kits class="block mb-40"></app-starter-kits>
     }
   `,
-  styles: ``,
-  imports: [HeroComponent, StarterKitsComponent, FiltersComponent],
+    imports: [HeroComponent, StarterKitsComponent, FiltersComponent],
 })
 export class HomeComponent {}

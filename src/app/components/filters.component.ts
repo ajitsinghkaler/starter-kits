@@ -21,8 +21,7 @@ import { StarterKitsStore } from '../stores/starter-kits.store';
       </div>
     </div>
   `,
-  styles: ``,
-})
+  })
 export class FiltersComponent {
   pricingType = [
     "Free",

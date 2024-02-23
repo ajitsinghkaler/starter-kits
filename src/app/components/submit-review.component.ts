@@ -67,8 +67,7 @@ import { RatingModule } from 'primeng/rating';
       </form>
     </div>
   `,
-  styles: ``,
-})
+  })
 export class SubmitReviewComponent {
   starterKitStore = inject(StarterKitStore);
   reviewService = inject(ReviewService);

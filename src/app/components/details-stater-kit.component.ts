@@ -142,8 +142,7 @@ import { MessageService } from 'primeng/api';
       </p>
     </div>
   `,
-  styles: ``,
-})
+  })
 export class DetailsStaterKitComponent {
   starterKitStore = inject(StarterKitStore);
   authService = inject(AuthService);

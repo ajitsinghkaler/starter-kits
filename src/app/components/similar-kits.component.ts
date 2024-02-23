@@ -29,8 +29,7 @@ import { CardSkeletonComponent } from './card-skeleton.component';
       </div>
     </div>
   `,
-  styles: ``,
-  imports: [StarterKitCardsComponent, CardSkeletonComponent],
+    imports: [StarterKitCardsComponent, CardSkeletonComponent],
 })
 export class SimilarKitsComponent implements OnInit {
   tags = input.required<Tag[]>();

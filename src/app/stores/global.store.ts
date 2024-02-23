@@ -9,5 +9,4 @@ export class GlobalStore {
   closeMenu() {
     this.isMenuOpen = false;
   }
-
 }

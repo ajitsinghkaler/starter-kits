@@ -32,8 +32,7 @@ import { StarterKitsStore } from '../stores/starter-kits.store';
       <app-hero-tags></app-hero-tags>
     </section>
   `,
-  styles: ``,
-  imports: [InputTextModule, FormsModule, HeroTagsComponent],
+    imports: [InputTextModule, FormsModule, HeroTagsComponent],
 })
 export class HeroComponent {
   starterKitsStore = inject(StarterKitsStore);

@@ -106,8 +106,7 @@ import { ToastModule } from 'primeng/toast';
       </a>
     </div>
   `,
-  styles: ``,
-})
+  })
 export class LoginComponent {
   authService = inject(AuthService);
 }

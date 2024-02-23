@@ -29,6 +29,5 @@ import { SkeletonModule } from 'primeng/skeleton';
       <p-skeleton height="1rem"></p-skeleton>
     </div>
   `,
-  styles: ``,
-})
+  })
 export class CardSkeletonComponent {}

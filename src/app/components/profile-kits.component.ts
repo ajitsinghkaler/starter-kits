@@ -48,8 +48,7 @@ import { ChipModule } from 'primeng/chip';
         </ng-template>
       </p-dataView>
   `,
-  styles: ``,
-})
+  })
 export class ProfileKitsComponent {
   starterKits = input.required<StarterKit[]>();
   myKits = input(false);

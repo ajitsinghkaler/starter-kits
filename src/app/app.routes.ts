@@ -49,6 +49,13 @@ export const routes: Routes = [
     
   },
   {
+    path: 'submit/:id',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./pages/edit-kit.component').then((c) => c.EditKitComponent),
+    
+  },
+  {
     path:'profile',
     canActivate: [authGuard],
     loadComponent: () =>

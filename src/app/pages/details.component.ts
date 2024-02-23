@@ -45,8 +45,7 @@ import { AuthService } from '../services/auth.service';
       } }
     </div>
   `,
-  styles: ``,
-  imports: [
+    imports: [
     ReviewsComponent,
     SimilarKitsComponent,
     SkeletonModule,

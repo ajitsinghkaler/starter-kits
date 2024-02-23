@@ -51,8 +51,7 @@ import { SkeletonModule } from 'primeng/skeleton';
       <p-skeleton height="6rem"></p-skeleton>
     </div>
   `,
-  styles: ``,
-})
+  })
 export class ContactComponent {
   contactService = inject(ContactService);
 

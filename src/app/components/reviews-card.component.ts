@@ -33,8 +33,7 @@ import { FormsModule } from '@angular/forms';
       </div>
     </div>
   `,
-  styles: ``,
-})
+  })
 export class ReviewsCardComponent {
   reviewData = input.required<Review>();
 }

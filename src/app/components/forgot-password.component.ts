@@ -52,8 +52,7 @@ import { AuthService } from '../services/auth.service';
       </button>
     </form>
   `,
-  styles: ``,
-})
+  })
 export class ForgotPasswordComponent {
   authService = inject(AuthService);
 }

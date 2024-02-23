@@ -73,8 +73,7 @@ import { AuthService } from '../services/auth.service';
       </nav>
     </header>
   `,
-  styles: ``,
-})
+  })
 export class HeaderComponent {
   globalStore = inject(GlobalStore);
   authService = inject(AuthService);

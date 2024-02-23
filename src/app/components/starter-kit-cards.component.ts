@@ -35,8 +35,7 @@ import { RouterLink } from '@angular/router';
       </div>
     </div>
   `,
-  styles: ``,
-})
+  })
 export class StarterKitCardsComponent {
   starterKit = input.required<StarterKit>();
 }

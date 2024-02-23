@@ -40,8 +40,7 @@ import { StarterKitsStore } from '../stores/starter-kits.store';
       }
     </div>
   `,
-  styles: ``,
-})
+  })
 export class HeroTagsComponent {
   tagStore = inject(TagStore);
   starterKitsStore = inject(StarterKitsStore);

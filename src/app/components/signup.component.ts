@@ -113,8 +113,7 @@ import { AuthService } from '../services/auth.service';
       </a>
     </div>
   `,
-  styles: ``,
-})
+  })
 export class SignupComponent {
   authService = inject(AuthService);
 }

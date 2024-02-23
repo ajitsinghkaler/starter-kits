@@ -86,8 +86,7 @@ import { AuthService } from '../services/auth.service';
       </div>
     </div>
   `,
-  styles: ``,
-})
+  })
 export class ResetPasswordComponent {
   authService = inject(AuthService);
 }
