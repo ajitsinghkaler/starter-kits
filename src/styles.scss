@@ -29,3 +29,11 @@ p-dropdown.ng-invalid.ng-touched div {
 p-multiselect.ng-invalid.ng-touched > div {
   @apply border-red-500 text-red-500;
 }
+
+.p-multiselect .p-multiselect-trigger{
+  width:auto;
+}
+
+p-password.ng-invalid.ng-touched > .p-password > .p-inputtext{
+  @apply border-red-500 text-red-500;
+}

@@ -1,10 +1,4 @@
 import { Injectable, inject } from '@angular/core';
-// import {
-//   AuthChangeEvent,
-//   AuthSession,
-//   Session,
-//   User,
-// } from '@supabase/supabase-js';
 import { SupabaseService } from './supabase.service';
 import { NgForm } from '@angular/forms';
 import { AuthChangeEvent, Session, User } from '@supabase/supabase-js';
@@ -43,30 +37,44 @@ export class AuthService {
     return this.supabaseService.supabase.auth.onAuthStateChange(callback);
   }
 
-  signUpEmail(form: NgForm) {
+  async signUpEmail(form: NgForm) {
+    form.form.markAllAsTouched();
+    if (form.invalid) return;
     const { email, password, repeatPassword } = form.value;
     if (password !== repeatPassword) {
       return;
     }
-    return this.supabaseService.supabase.auth.signUp({
+    const { data, error } = await this.supabaseService.supabase.auth.signUp({
       email: email,
       password: password,
     });
+    if (error) {
+      return;
+    }
+    const { data: loginData, error: loginError } =
+      await this.supabaseService.supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
+    if (loginError) {
+      return;
+    }
+    this.router.navigate(['/']);
   }
 
   async loginEmail(form: NgForm) {
+    form.form.markAllAsTouched();
+    if (form.invalid) return;
     const { email, password } = form.value;
-    const {data, error} =  await this.supabaseService.supabase.auth
-      .signInWithPassword({
+    const { data, error } =
+      await this.supabaseService.supabase.auth.signInWithPassword({
         email: email,
         password: password,
-      })
-data
+      });
     if (error) {
-      return
+      return;
     }
     this.router.navigate(['/']);
-
   }
 
   signOut() {
@@ -80,6 +88,8 @@ data
   }
 
   resetPassword(form: NgForm) {
+    form.form.markAllAsTouched();
+    if (form.invalid) return;
     const { email } = form.value;
 
     return this.supabaseService.supabase.auth.resetPasswordForEmail(email, {
@@ -88,6 +98,8 @@ data
   }
 
   newPassword(form: NgForm) {
+    form.form.markAllAsTouched();
+    if (form.invalid) return;
     const { password, repeatPassword } = form.value;
 
     if (password !== repeatPassword) {

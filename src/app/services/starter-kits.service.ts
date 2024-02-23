@@ -3,6 +3,9 @@ import { StarterKit } from '../models/starter-kit';
 import { SupabaseService } from './supabase.service';
 import { NgForm } from '@angular/forms';
 import { Bookmark, ReviewsCount } from '../stores/starter-kit.store';
+import { Tag } from '../models/tag';
+import { AuthService } from './auth.service';
+import { environment } from '../../environments/environment';
 
 export interface Filters {
   name: string;
@@ -19,6 +22,7 @@ export interface Filters {
 })
 export class StarterKitsService {
   supabaseService = inject(SupabaseService);
+  authService = inject(AuthService);
 
   constructor() {}
 
@@ -90,22 +94,53 @@ export class StarterKitsService {
     return data;
   }
 
-  async createStarterKit(form: NgForm) {
+  async createStarterKit(form: NgForm, file: FileList | null) {
     form.form.markAllAsTouched();
+    console.log('form', form.value);
     if (form.invalid) return;
+    if (!file) return;
     const value = form.value;
-    return this.supabaseService.supabase.from('starter_kits').insert({
-      name: value.name,
-      website: value.website,
-      description: value.description,
-      short_description: value.description,
-      price: value.price,
-      pricing_type: value.pricing_type,
-      kit_image: value.image,
-    });
+    try {
+      const { data, error: starterKitError } =
+        await this.supabaseService.supabase
+          .from('starter_kits')
+          .insert({
+            name: value.name,
+            website: value.website,
+            short_description: value.description,
+            description: value.description,
+            kit_image:
+              `${environment.supabaseUrl}/storage/v1/object/public/starterKitImages/` +
+              (await this.uploadImage(
+                file,
+                this.authService.userState().user!.id
+              )),
+            // tags: value.tags,
+            price: value.price,
+            pricing_type: value.pricing_type,
+          })
+          .select()
+          .single<StarterKit>();
+      if (starterKitError) throw starterKitError;
+
+      const starterkit_id = data.id;
+
+      const { data: tagsData, error: tagsError } =
+        await this.supabaseService.supabase.from('starter_kit_tags').insert(
+          value.tags.map((tag: Tag) => ({
+            tags: tag.id,
+            starter_kit: starterkit_id,
+          }))
+        );
+      if (tagsError) throw tagsError;
+      tagsData;
+      console.log('Starterkit and tags inserted successfully!');
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
-  async getStarterKitsTags(tags: number[], starterKitId: number, limit=8) {
+  async getStarterKitsTags(tags: number[], starterKitId: number, limit = 8) {
     return this.supabaseService.supabase
       .from('starter_kit_tags')
       .select(`starter_kits(*, tags(*))`)
@@ -153,5 +188,26 @@ export class StarterKitsService {
       .select('starter_kit_id')
       .eq('user_id', profileId)
       .eq('starter_kit_id', staterKitId);
+  }
+
+  async uploadImage(files: FileList, userId: string) {
+    if (!files?.length) return;
+    const file = files[0];
+    const timeStamp = Date.now();
+    const filePath = `starter_kits/${userId}/${timeStamp}-${file.name}`;
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { data, error } = await this.supabaseService.supabase.storage
+      .from('starterKitImages')
+      .upload(filePath, file);
+
+    if (error) {
+      console.error('Error uploading the file', error);
+      return;
+    }
+
+    console.log(data);
+
+    return data.path;
   }
 }

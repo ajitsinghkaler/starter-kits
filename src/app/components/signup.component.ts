@@ -22,7 +22,7 @@ import { AuthService } from '../services/auth.service';
       <div class="flex flex-col gap-2">
         <label class="text-slate-700 font-medium" for="email">Email</label>
 
-        <input id="email" name="email" placeholder="Email" pInputText ngModel />
+        <input id="email" name="email" placeholder="Email" required pInputText ngModel />
       </div>
       <div class="flex flex-col gap-2 mt-4">
         <label class="text-slate-700 font-medium" for="password"
@@ -33,6 +33,7 @@ import { AuthService } from '../services/auth.service';
           inputId="password"
           placeholder="Password"
           ngModel
+          required
           [toggleMask]="true"
           styleClass="w-full"
           [inputStyle]="{ width: '100%' }"
@@ -48,6 +49,7 @@ import { AuthService } from '../services/auth.service';
           inputId="repeat-password"
           placeholder="Repeat Password"
           ngModel
+          required
           [toggleMask]="true"
           styleClass="w-full"
           [inputStyle]="{ width: '100%' }"

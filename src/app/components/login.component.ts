@@ -28,7 +28,7 @@ import { ToastModule } from 'primeng/toast';
       <div class="flex flex-col gap-2">
         <label class="text-slate-700 text-sm" for="email">Email</label>
 
-        <input id="email" name="email" placeholder="Email" pInputText ngModel />
+        <input id="email" required name="email" placeholder="Email" pInputText ngModel />
       </div>
       <div class="flex flex-col gap-2 mt-4">
         <label class="text-slate-700 text-sm" for="password">Password</label>
@@ -37,6 +37,7 @@ import { ToastModule } from 'primeng/toast';
           inputId="password"
           placeholder="Password"
           ngModel
+          [required]="true"
           [toggleMask]="true"
           styleClass="w-full"
           [inputStyle]="{ width: '100%' }"

@@ -21,6 +21,7 @@ import { AuthService } from '../services/auth.service';
         <p-password
           name="password"
           inputId="password"
+          [required]="true"
           placeholder="Password"
           ngModel
           [toggleMask]="true"
@@ -38,6 +39,7 @@ import { AuthService } from '../services/auth.service';
           inputId="repeat-password"
           placeholder="Repeat Password"
           ngModel
+          required
           [toggleMask]="true"
           styleClass="w-full"
           [inputStyle]="{ width: '100%' }"
