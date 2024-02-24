@@ -6,6 +6,8 @@ import { Bookmark, ReviewsCount } from '../stores/starter-kit.store';
 import { Tag } from '../models/tag';
 import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 export interface Filters {
   name: string;
@@ -23,6 +25,8 @@ export interface Filters {
 export class StarterKitsService {
   supabaseService = inject(SupabaseService);
   authService = inject(AuthService);
+  router = inject(Router);
+  messageService = inject(MessageService)
 
   constructor() {}
 
@@ -125,7 +129,7 @@ export class StarterKitsService {
 
       const starterkit_id = data.id;
 
-      const { data: tagsData, error: tagsError } =
+      const { error: tagsError } =
         await this.supabaseService.supabase.from('starter_kit_tags').insert(
           value.tags.map((tag: Tag) => ({
             tags: tag.id,
@@ -133,8 +137,72 @@ export class StarterKitsService {
           }))
         );
       if (tagsError) throw tagsError;
-      tagsData;
       console.log('Starterkit and tags inserted successfully!');
+      this.router.navigate(['/']);
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Successfully Added',
+        detail: "Your boilerplate has been added",
+      });
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  async editStarterKit(
+    form: NgForm,
+    file: FileList | null,
+    kitId: number | undefined
+  ) {
+    form.form.markAllAsTouched();
+    console.log('form', form.value);
+    if (form.invalid) return;
+    // if (!file) return;
+    const value = form.value;
+    try {
+      const { data, error: starterKitError } =
+        await this.supabaseService.supabase
+          .from('starter_kits')
+          .update({
+            name: value.name,
+            website: value.website,
+            short_description: value.description,
+            description: value.description,
+            ...(file && {
+              kit_image:
+                `${environment.supabaseUrl}/storage/v1/object/public/starterKitImages/` +
+                (await this.uploadImage(
+                  file,
+                  this.authService.userState().user!.id
+                )),
+            }),
+            // tags: value.tags,
+            price: value.price,
+            pricing_type: value.pricing_type,
+          })
+          .match({ id: kitId||0 })
+          .select()
+          .single<StarterKit>();
+      if (starterKitError) throw starterKitError;
+
+      const starterkit_id = data.id;
+
+      const {  error: tagsError } =
+        await this.supabaseService.supabase.from('starter_kit_tags').upsert(
+          value.tags.map((tag: Tag) => ({
+            tags: tag.id,
+            starter_kit: starterkit_id,
+          })),
+          { ignoreDuplicates: true }
+        );
+      if (tagsError) throw tagsError;
+      console.log('Starterkit and tags inserted successfully!');
+      this.router.navigate(['/profile']);
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Successfully edited',
+        detail: "The boilerplate you changed has been edited successfully",
+      });
     } catch (error) {
       console.error('Error:', error);
     }

@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, inject, input } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, OnInit, inject, input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RatingModule } from 'primeng/rating';
@@ -11,6 +11,8 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CreateTagComponent } from '../components/create-tag.component';
 import { StarterKitStore } from '../stores/starter-kit.store';
 import { EditKitStore } from '../stores/edit-kit.store';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { StarterKit } from '../models/starter-kit';
 
 @Component({
   selector: 'app-edit-kit',
@@ -23,11 +25,25 @@ import { EditKitStore } from '../stores/edit-kit.store';
     FormsModule,
     MultiSelectModule,
     DropdownModule,
+    ProgressSpinnerModule,
   ],
   template: `
+    <!-- <form
+      #starterKitForm="ngForm"
+      class="space-y-6 max-w-4xl rounded-lg px-4 sm:px-8 pt-6 pb-12 container mx-auto mt-12 mb-40 bg-white"
+      (ngSubmit)="starterKit.editStarterKit(starterKitForm, files)"
+    > -->
+    @if(starterKitStore.isLoading()){
+    <div class="grid items-center justify-center py-20">
+      <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+    </div>
+
+    } @else{
     <form
       #starterKitForm="ngForm"
       class="space-y-6 max-w-4xl rounded-lg px-4 sm:px-8 pt-6 pb-12 container mx-auto mt-12 mb-40 bg-white"
+      (ngSubmit)="starterKit.editStarterKit(starterKitForm, files, this.editKit.id)"
+
     >
       <h1 class="text-3xl font-bold text-gray-900 mb-8">Edit Boilerplate</h1>
 
@@ -40,7 +56,7 @@ import { EditKitStore } from '../stores/edit-kit.store';
             name="name"
             pInputText
             class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-slate-400"
-            ngModel
+            [(ngModel)]="editKit.name"
             required
             #name="ngModel"
           />
@@ -59,7 +75,7 @@ import { EditKitStore } from '../stores/edit-kit.store';
             name="website"
             pInputText
             class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-slate-400"
-            ngModel
+            [(ngModel)]="editKit.website"
             #URL="ngModel"
             required
           />
@@ -81,7 +97,7 @@ import { EditKitStore } from '../stores/edit-kit.store';
           maxlength="60"
           pInputText
           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-slate-400"
-          ngModel
+          [(ngModel)]="editKit.short_description"
           #shotDescription="ngModel"
           required
         />
@@ -102,7 +118,7 @@ import { EditKitStore } from '../stores/edit-kit.store';
           rows="3"
           pInputTextarea
           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-slate-400"
-          ngModel
+          [(ngModel)]="editKit.description"
           #description="ngModel"
           required
         ></textarea>
@@ -138,7 +154,6 @@ import { EditKitStore } from '../stores/edit-kit.store';
             type="file"
             class="hidden"
             name="kit_image"
-            required
             (change)="onFileSelected($event)"
           />
         </label>
@@ -153,7 +168,7 @@ import { EditKitStore } from '../stores/edit-kit.store';
             display="chip"
             name="tags"
             styleClass="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-slate-400"
-            ngModel
+            [(ngModel)]="editKit.tags"
             [required]="true"
             [options]="tagStore.tags()"
             placeholder="Select Tag(s)"
@@ -185,7 +200,7 @@ import { EditKitStore } from '../stores/edit-kit.store';
           >
           <p-dropdown
             name="pricing_type"
-            ngModel
+            [(ngModel)]="editKit.pricing_type"
             styleClass="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-slate-400"
             [options]="pricingType"
             placeholder="Select Pricing Type"
@@ -205,10 +220,10 @@ import { EditKitStore } from '../stores/edit-kit.store';
           <input
             type="text"
             id="pricing"
-            name="pricing"
+            name="price"
             pInputText
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-slate-400"
-            ngModel
+            [(ngModel)]="editKit.price"
             required
             #pricing="ngModel"
           />
@@ -227,11 +242,22 @@ import { EditKitStore } from '../stores/edit-kit.store';
         Submit
       </button>
     </form>
+    }
   `,
   styles: ``,
 })
 export class EditKitComponent implements OnInit {
   pricingType = ['Free', 'Paid'];
+  editKit = {
+    name: '',
+    website: '',
+    short_description: '',
+    description: '',
+    kit_image: '',
+    tags: [],
+    pricing_type: '',
+    price: '',
+  } as Partial<StarterKit>;
   id = input<number>(0);
   starterKit = inject(StarterKitsService);
   starterKitStore = inject(StarterKitStore);
@@ -241,13 +267,16 @@ export class EditKitComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
   files: FileList | null = null;
   fileNames: string[] = [];
-  @ViewChild('userForm') userForm!: NgForm;
 
   ngOnInit() {
-    if (!this.editKitStore.kit) {
-      this.starterKitStore.loadStarterKit(this.id());
+    if (this.editKitStore.kit) {
+      this.editKit = this.editKitStore.kit;
+    } else {
+      this.starterKitStore.loadStarterKit(this.id()).then(() => {
+        this.editKit =
+          this.starterKitStore.starterKit() as unknown as StarterKit;
+      });
     }
-    
   }
 
   createTags(e: Event) {

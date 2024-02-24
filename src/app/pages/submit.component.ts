@@ -142,9 +142,16 @@ import { CreateTagComponent } from '../components/create-tag.component';
             class="hidden"
             name="kit_image"
             required
+            ngModel
+            #kitImage="ngModel"
             (change)="onFileSelected($event)"
           />
         </label>
+        @if(kitImage.touched && kitImage.invalid){
+        <div class="text-red-500 text-sm mt-2">
+          Please select an image for the boiler plate.
+        </div>
+        }
       </div>
 
       <div>
@@ -208,7 +215,7 @@ import { CreateTagComponent } from '../components/create-tag.component';
           <input
             type="text"
             id="pricing"
-            name="pricing"
+            name="price"
             pInputText
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-slate-400"
             ngModel
