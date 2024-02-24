@@ -56,6 +56,6 @@ export class ContactComponent {
   contactService = inject(ContactService);
 
   constructor() {
-    this.contactService.init();
+    // this.contactService.init();
   }
 }

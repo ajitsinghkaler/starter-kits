@@ -50,11 +50,11 @@ import { Router } from '@angular/router';
               >
                 <i class="pi pi-pencil"></i>
               </button>
-              <button
+              <!-- <button
                 class="py-2 px-3 rounded-full border bg-white hover:bg-black hover:text-white"
               >
                 <i class="pi pi-trash"></i>
-              </button>
+              </button> -->
             </div>
             }
           </div>
