@@ -49,6 +49,18 @@ export const routes: Routes = [
     
   },
   {
+    path: 'tos',
+    loadComponent: () =>
+      import('./pages/tos.component').then((c) => c.TosComponent),
+    
+  },
+  {
+    path: 'privacy',
+    loadComponent: () =>
+      import('./pages/privacy.component').then((c) => c.PrivacyComponent),
+    
+  },
+  {
     path: 'submit/:id',
     canActivate: [authGuard],
     loadComponent: () =>

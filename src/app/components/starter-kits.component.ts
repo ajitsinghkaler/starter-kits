@@ -23,32 +23,48 @@ import { CardSkeletonComponent } from './card-skeleton.component';
               [starterKit]="starterKit"
             ></app-starter-kit-cards>
             } @empty {
-          <p class="text-lg text-center font-bold">
+            <p class="text-lg text-center font-bold">
               There are no featured boilerplates for your search criteria.
             </p>
-            }}
+            } }
           </div>
+          @if(store.starterKits().length>23){
+          <div class="w-full flex justify-center mt-8">
+            <button (click)="loadMore()"
+              class="flex items-center justify-center text-black hover:bg-zinc-100 border shadow rounded py-2 px-8 font-bold mt-2"
+            >
+              Load More
+            </button>
+          </div>
+          }
         </p-tabPanel>
         @defer (on immediate; prefetch on idle) {
         <p-tabPanel header="Latest">
-          <ng-template pTemplate="content">
-            <div
-              class="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-              [class.grid]="store.starterKits().length || store.isLoading()"
+          <div
+            class="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            [class.grid]="store.starterKits().length || store.isLoading()"
+          >
+            @if(store.isLoading()){
+            <app-card-skeleton></app-card-skeleton>
+            } @else{ @for (starterKit of store.starterKits(); track $index) {
+            <app-starter-kit-cards
+              [starterKit]="starterKit"
+            ></app-starter-kit-cards>
+            }@empty {
+            <p class="text-lg text-center font-bold">
+              There are no boilerplates for your search criteria.
+            </p>
+            }}
+          </div>
+          @if(store.starterKits().length>23){
+          <div class="w-full flex justify-center mt-8">
+            <button (click)="loadMore()"
+              class="flex items-center justify-center text-black hover:bg-zinc-100 border shadow rounded py-2 px-8 font-bold mt-2"
             >
-              @if(store.isLoading()){
-              <app-card-skeleton></app-card-skeleton>
-              } @else{ @for (starterKit of store.starterKits(); track $index) {
-              <app-starter-kit-cards
-                [starterKit]="starterKit"
-              ></app-starter-kit-cards>
-              }@empty {
-              <p class="text-lg text-center font-bold">
-                There are no boilerplates for your search criteria.
-              </p>
-              }}
-            </div>
-          </ng-template>
+              Load More
+            </button>
+          </div>
+          }
         </p-tabPanel>
         }
       </p-tabView>
@@ -58,7 +74,11 @@ import { CardSkeletonComponent } from './card-skeleton.component';
 })
 export class StarterKitsComponent {
   readonly store = inject(StarterKitsStore);
-  starterKits = this.store.starterKitFiltered({ featured: true });
+  starterKits = this.store.starterKitFiltered({
+    featured: true,
+    page: 1,
+    limit: 24,
+  });
 
   changeTab(event: number) {
     const filters = this.store.filters();
@@ -69,6 +89,14 @@ export class StarterKitsComponent {
       filters.new = true;
       delete filters.featured;
     }
-    this.store.starterKitFiltered({ ...filters });
+    this.store.starterKitFiltered({ ...filters, page: 1, limit: 24 });
+  }
+
+  loadMore() {
+    const filters = this.store.filters();
+    this.store.starterKitFiltered({
+      ...filters,
+      page: (filters.page || 0) + 1,
+    });
   }
 }

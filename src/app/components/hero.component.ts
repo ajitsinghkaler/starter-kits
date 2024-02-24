@@ -9,10 +9,9 @@ import { StarterKitsStore } from '../stores/starter-kits.store';
   standalone: true,
   template: `
     <section class="text-gray-900 container px-4 text-center py-20 mx-auto">
-      <h1 class="text-4xl font-bold">Welcome to the Starter Kit!</h1>
+      <h1 class="text-4xl font-bold">Launch Quickly with Top Boilerplate Templates!</h1>
       <p class="mt-4 text-lg">
-        SaaS AI Tools is your source for new AI tools & daily AI news to help
-        supercharge your creativity to the next level.
+      Discover Top Boilerplates to Launch Fast and Save Hours of Development Time.
       </p>
       <div class="gap-3 pt-12">
         <span class="p-input-icon-right w-full max-w-2xl">
