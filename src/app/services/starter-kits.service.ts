@@ -31,7 +31,6 @@ export class StarterKitsService {
   constructor() {}
 
   async getStarterKits(filters: Partial<Filters> = { page: 1 }) {
-    console.log('filters', filters);
     let ids: number[] = [];
     if (filters.tags) {
       filters.tags = filters.tags.toString();
@@ -48,7 +47,6 @@ export class StarterKitsService {
 
       ids = taggedKits.map((kit) => kit.starter_kit);
     }
-    console.log('ids', ids);
     let query = this.supabaseService.supabase
       .from('starter_kits')
       .select(`*,   tags(*)`);
@@ -87,9 +85,7 @@ export class StarterKitsService {
       );
     }
 
-    console.log('query', query);
     const { data, error } = await query.returns<StarterKit[]>();
-    console.log('data', data);
 
     if (error) {
       console.error('Error fetching users:', error);
@@ -100,7 +96,6 @@ export class StarterKitsService {
 
   async createStarterKit(form: NgForm, file: FileList | null) {
     form.form.markAllAsTouched();
-    console.log('form', form.value);
     if (form.invalid) return;
     if (!file) return;
     const value = form.value;
@@ -137,7 +132,6 @@ export class StarterKitsService {
           }))
         );
       if (tagsError) throw tagsError;
-      console.log('Starterkit and tags inserted successfully!');
       this.router.navigate(['/']);
       this.messageService.add({
         severity: 'success',
@@ -155,7 +149,6 @@ export class StarterKitsService {
     kitId: number | undefined
   ) {
     form.form.markAllAsTouched();
-    console.log('form', form.value);
     if (form.invalid) return;
     // if (!file) return;
     const value = form.value;
@@ -196,7 +189,6 @@ export class StarterKitsService {
           { ignoreDuplicates: true }
         );
       if (tagsError) throw tagsError;
-      console.log('Starterkit and tags inserted successfully!');
       this.router.navigate(['/profile']);
       this.messageService.add({
         severity: 'success',
@@ -273,8 +265,6 @@ export class StarterKitsService {
       console.error('Error uploading the file', error);
       return;
     }
-
-    console.log(data);
 
     return data.path;
   }

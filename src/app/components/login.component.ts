@@ -89,7 +89,7 @@ import { ToastModule } from 'primeng/toast';
     <p-divider layout="horizontal" class="flex" [align]="'center'"
       ><b>OR</b></p-divider
     >
-    <button
+    <button (click)="authService.loginWithGoogle()"
       class="flex items-center justify-center text-black hover:bg-zinc-100 border shadow rounded py-3 w-full font-bold mt-2"
     >
       <span class="pi pi-google mr-3"></span>

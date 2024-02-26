@@ -145,7 +145,6 @@ export class ProfileComponent implements OnDestroy {
     distinctUntilChanged(),
     tap(() => {
       this.profileStore.startLoading();
-      console.log('Loading profile');
     }),
     filter((userState) => Boolean(userState)),
     tap((userState) => this.profileStore.loadProfile(userState.user!.id))

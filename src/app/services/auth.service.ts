@@ -20,7 +20,6 @@ export class AuthService {
 
   constructor() {
     this.authChanges((_, session) => {
-      // console.log('session', session, _);
       patchState(this.userState, () => ({ user: session?.user }));
     });
   }
@@ -171,5 +170,19 @@ export class AuthService {
     });
 
     this.router.navigate(['/']);
+  }
+
+  async loginWithGoogle() {
+    const { error } = await this.supabaseService.supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
+    if (error) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: error.message || 'An error occurred while logging in with Google.',
+      });
+      return;
+    }
   }
 }

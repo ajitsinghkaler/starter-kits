@@ -17,7 +17,6 @@ export class TagsService {
 
   async createTag(form: NgForm) {
     const value = form.value;
-    console.log('value', value);
 
     const tags = value.tags.map((tag:string) => ({ name: tag }));
     return this.supabaseService.supabase

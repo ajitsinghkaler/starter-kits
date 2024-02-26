@@ -31,7 +31,6 @@ export const StarterKitsStore = signalStore(
         debounceTime(300),
         tap(() => patchState(store, { isLoading: true })),
         switchMap((filters: Filters) => {
-          console.log('filters', filters);
           return from(starterKitService.getStarterKits(filters)).pipe(
             tapResponse({
               next: (starterKits) => patchState(store, { starterKits }),

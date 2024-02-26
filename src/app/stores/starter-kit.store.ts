@@ -53,14 +53,13 @@ export const StarterKitStore = signalStore(
     },
     async bookmarkStarterKit(starterKitId: number): Promise<void> {
       patchState(store, { bookMarkLoading: true });
-      const { data, error } = await starterKitService.bookmarkStarterKit(
+      const { error } = await starterKitService.bookmarkStarterKit(
         starterKitId
       );
       if (error) {
         console.error('Error toggling bookmark', error);
         return;
       }
-      console.log('data', data);
       patchState(store, {
         bookmarked: true,
         bookMarkLoading: false,
@@ -77,14 +76,13 @@ export const StarterKitStore = signalStore(
     },
     async removeBookmarkStarterKit(starterKitId: number): Promise<void> {
       patchState(store, { bookMarkLoading: true });
-      const { data, error } = await starterKitService.deleteBookmark(
+      const { error } = await starterKitService.deleteBookmark(
         starterKitId
       );
       if (error) {
         console.error('Error removing book mark from current data', error);
         return;
       }
-      console.log('data', data);
       patchState(store, { bookmarked: false, bookMarkLoading: false });
       if (store.starterKit()) {
         patchState(store, {
@@ -108,7 +106,6 @@ export const StarterKitStore = signalStore(
         console.error('Error getting current bookmark', error);
         return;
       }
-      console.log('data', data);
       patchState(store, {
         bookmarked: Boolean(data.length),
         bookMarkLoading: false,
