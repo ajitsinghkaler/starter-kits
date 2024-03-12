@@ -13,8 +13,12 @@ import { RouterLink } from '@angular/router';
       <div class="w-full md:w-1/2 px-4">
         <a aria-label="Home" href="/">
           <div class="flex items-center">
-            <!-- <img src="logo-1.svg" /> -->
-            <h1 class="font-bold">codelaunchhub</h1>
+          <img
+              src="https://josedutrsuxgncgbwfeo.supabase.co/storage/v1/object/public/starterKitImages/public/7.png"
+              alt="StaterKit Logo"
+              class="h-12"
+            />
+            <!-- <h1 class="font-bold">Stater</h1> -->
           </div>
         </a>
         <p class="mt-4">Launch Quickly with Top Boilerplate Templates.</p>

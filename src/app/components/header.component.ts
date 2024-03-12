@@ -18,8 +18,8 @@ import { AuthService } from '../services/auth.service';
             class="text-xl sm:text-2xl font-semibold text-gray-800"
           >
             <img
-              src="https://primefaces.org/cdn/primeng/images/primeng.svg"
-              alt="PrimeNG Logo"
+              src="https://josedutrsuxgncgbwfeo.supabase.co/storage/v1/object/public/starterKitImages/public/7.png"
+              alt="StaterKit Logo"
               class="h-12"
             />
           </a>
