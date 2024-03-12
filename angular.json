@@ -29,7 +29,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/starter-kits",
+            "outputPath": "dist",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -39,7 +39,8 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/_routes.json"
             ],
             "styles": [
               "src/styles.scss",
@@ -136,6 +137,7 @@
     }
   },
   "cli": {
+    "packageManager": "npm",
     "schematicCollections": [
       "@angular-eslint/schematics"
     ]
