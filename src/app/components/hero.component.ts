@@ -9,7 +9,7 @@ import { StarterKitsStore } from '../stores/starter-kits.store';
   standalone: true,
   template: `
     <section class="text-gray-900 container px-4 text-center py-20 mx-auto">
-      <h1 class="text-4xl font-bold">Launch Quickly with Top Boilerplate Templates!</h1>
+      <h1 class="text-4xl font-bold">Launch Your Project in Record Time!</h1>
       <p class="mt-4 text-lg">
       Discover Top Boilerplates to Launch Fast and Save Hours of Development Time.
       </p>
