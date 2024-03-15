@@ -33,7 +33,10 @@ export const StarterKitsStore = signalStore(
         switchMap((filters: Filters) => {
           return from(starterKitService.getStarterKits(filters)).pipe(
             tapResponse({
-              next: (starterKits) => patchState(store, { starterKits }),
+              next: (starterKits) =>
+                patchState(store, {
+                  starterKits: [...store.starterKits(), ...(starterKits || [])],
+                }),
               error: () => patchState(store, { isError: true }),
               finalize: () => patchState(store, { isLoading: false }),
             })

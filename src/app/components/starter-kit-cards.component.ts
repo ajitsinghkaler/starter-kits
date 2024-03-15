@@ -2,21 +2,25 @@ import { Component, input } from '@angular/core';
 import { StarterKit } from '../models/starter-kit';
 import { ChipModule } from 'primeng/chip';
 import { RouterLink } from '@angular/router';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-starter-kit-cards',
   standalone: true,
-  imports: [ChipModule, RouterLink],
+  imports: [ChipModule, RouterLink, NgOptimizedImage],
   template: `
     <div
       class="h-full border rounded-lg overflow-hidden text-black max-w-sm mx-auto"
     >
+    <div class="relative w-full h-64 cursor-pointer border-b">
       <img
-        class="w-full h-64 cursor-pointer"
+        class=" object-cover"
+        fill
         alt="{{ starterKit().name }} image"
-        [src]="starterKit().kit_image"
+        [ngSrc]="starterKit().kit_image || 'assets/500.png'"
         routerLink="/details/{{ starterKit().id }}"
       />
+    </div>
       <div class="p-4">
         <h3
           routerLink="/details/{{ starterKit().id }}"

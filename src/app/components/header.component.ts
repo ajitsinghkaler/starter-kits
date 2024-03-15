@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GlobalStore } from '../stores/global.store';
 import { AuthService } from '../services/auth.service';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, NgOptimizedImage],
   template: `
     <header class="border-b">
       <nav
@@ -18,7 +19,10 @@ import { AuthService } from '../services/auth.service';
             class="text-xl sm:text-2xl font-semibold text-gray-800"
           >
             <img
-              src="https://josedutrsuxgncgbwfeo.supabase.co/storage/v1/object/public/starterKitImages/public/7.png"
+            height="48"
+            priority
+            width="48"
+              ngSrc="https://josedutrsuxgncgbwfeo.supabase.co/storage/v1/object/public/starterKitImages/public/7.png"
               alt="StaterKit Logo"
               class="h-12"
             />

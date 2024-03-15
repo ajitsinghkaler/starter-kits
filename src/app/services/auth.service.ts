@@ -2,25 +2,25 @@ import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { NgForm } from '@angular/forms';
 import { AuthChangeEvent, Session, User } from '@supabase/supabase-js';
-import { patchState, signalState } from '@ngrx/signals';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { BehaviorSubject } from 'rxjs';
 type UserState = {
   user: User | null;
-  authError: string | null;
 };
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   router = inject(Router);
-  userState = signalState<UserState>({ user: null, authError: null });
+  userState = new BehaviorSubject<UserState>({ user: null });
+  user$ = this.userState.asObservable();
   supabaseService = inject(SupabaseService);
   messageService = inject(MessageService);
 
   constructor() {
     this.authChanges((_, session) => {
-      patchState(this.userState, () => ({ user: session?.user }));
+      this.userState.next({ user: session?.user || null });
     });
   }
 
@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   isAuthenticated() {
-    return !!this.userState().user;
+    return !!this.userState.getValue().user;
   }
 
   authChanges(
@@ -104,7 +104,7 @@ export class AuthService {
       });
     }
 
-    patchState(this.userState, () => ({ user: null }));
+    this.userState.next({ user: null });
     const currentUrl = this.router.url;
     if (currentUrl === '/profile' || currentUrl === '/submit') {
       this.router.navigate(['/auth/login']);
@@ -122,9 +122,7 @@ export class AuthService {
     const { email } = form.value;
 
     const { error } =
-      await this.supabaseService.supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: 'http://localhost:4200/reset-password',
-      });
+      await this.supabaseService.supabase.auth.resetPasswordForEmail(email);
 
     if (error) {
       this.messageService.add({
@@ -155,11 +153,12 @@ export class AuthService {
       password: password,
     });
 
-    if(error){
+    if (error) {
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
-        detail: error.message || 'An error occurred while updating the password.',
+        detail:
+          error.message || 'An error occurred while updating the password.',
       });
       return;
     }
@@ -174,13 +173,14 @@ export class AuthService {
 
   async loginWithGoogle() {
     const { error } = await this.supabaseService.supabase.auth.signInWithOAuth({
-      provider: 'google',
+      provider: 'google', options: { redirectTo: 'http://localhost:4200/auth/login'}
     });
     if (error) {
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
-        detail: error.message || 'An error occurred while logging in with Google.',
+        detail:
+          error.message || 'An error occurred while logging in with Google.',
       });
       return;
     }

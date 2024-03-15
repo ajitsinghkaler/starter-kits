@@ -1,16 +1,23 @@
 import { Component, inject } from '@angular/core';
-import { NgPlural, NgPluralCase, TitleCasePipe } from '@angular/common';
+import { IMAGE_CONFIG, NgPlural, NgPluralCase, TitleCasePipe } from '@angular/common';
 import { AvatarModule } from 'primeng/avatar';
 import { StarterKitStore } from '../stores/starter-kit.store';
 import { AuthService } from '../services/auth.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { NgOptimizedImage } from '@angular/common'
+
 
 @Component({
   selector: 'app-details-stater-kit',
   standalone: true,
-  imports: [NgPluralCase, NgPlural, TitleCasePipe, AvatarModule, ToastModule],
-  providers: [MessageService],
+  imports: [NgPluralCase, NgPlural, TitleCasePipe, AvatarModule, ToastModule, NgOptimizedImage],
+  providers: [MessageService, {
+    provide: IMAGE_CONFIG,
+    useValue: {
+      breakpoints: [16, 48, 96, 128, 384, 640, 750, 828, 1080, 1200, 1920]
+    }
+  },],
   template: `
     <p-toast></p-toast>
     <div class="flex gap-x-4 flex-wrap">
@@ -35,14 +42,18 @@ import { MessageService } from 'primeng/api';
           >
           }
         </div>
+        <div class="relative h-[400px] sm:h-[500px] md:h-[550px]  sm: w-full rounded-lg lg:hidden overflow-hidden mb-6">
         <img
-          class="object-cover w-full rounded-lg lg:hidden  max-h-96 overflow-hidden mb-6"
-          [src]="
+          class="object-cover"
+          priority
+          [ngSrc]="
             starterKitStore.starterKit()?.kit_image ||
-            'https://via.placeholder.com/500'
+            'assets/500.png'
           "
           alt="Boilerplate Image"
+          fill
         />
+        </div>
         <p
           class="text-gray-900 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 my-"
         >
@@ -124,13 +135,15 @@ import { MessageService } from 'primeng/api';
         </div>
       </div>
       <div
-        class="w-full lg:w-[calc(50%-.5rem)] hidden lg:block max-h-96 overflow-hidden"
+        class="w-full lg:w-[calc(50%-.5rem)] hidden lg:block max-h-96 overflow-hidden relative"
       >
+
         <img
           class="object-cover w-full h-full rounded-lg"
-          [src]="
+          priority fill
+          [ngSrc]="
             starterKitStore.starterKit()?.kit_image ||
-            'https://via.placeholder.com/500'
+            'assets/500.png'
           "
           alt="Boilerplate Image"
         />

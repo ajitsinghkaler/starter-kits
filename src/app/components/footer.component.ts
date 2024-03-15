@@ -1,10 +1,11 @@
+import { NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [ RouterLink],
+  imports: [ RouterLink, NgOptimizedImage],
   host: {
     class: 'border-t mt-auto'
   },
@@ -14,7 +15,10 @@ import { RouterLink } from '@angular/router';
         <a aria-label="Home" href="/">
           <div class="flex items-center">
           <img
-              src="https://josedutrsuxgncgbwfeo.supabase.co/storage/v1/object/public/starterKitImages/public/7.png"
+              ngSrc="https://josedutrsuxgncgbwfeo.supabase.co/storage/v1/object/public/starterKitImages/public/7.png"
+              height="48"
+              priority
+              width="48"
               alt="StaterKit Logo"
               class="h-12"
             />

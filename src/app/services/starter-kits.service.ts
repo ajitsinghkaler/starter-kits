@@ -112,7 +112,7 @@ export class StarterKitsService {
               `${environment.supabaseUrl}/storage/v1/object/public/starterKitImages/` +
               (await this.uploadImage(
                 file,
-                this.authService.userState().user!.id
+                this.authService.userState.getValue().user!.id
               )),
             // tags: value.tags,
             price: value.price,
@@ -166,7 +166,7 @@ export class StarterKitsService {
                 `${environment.supabaseUrl}/storage/v1/object/public/starterKitImages/` +
                 (await this.uploadImage(
                   file,
-                  this.authService.userState().user!.id
+                  this.authService.userState.getValue().user!.id
                 )),
             }),
             // tags: value.tags,

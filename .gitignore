@@ -42,3 +42,5 @@ testem.log
 Thumbs.db
 
 /data
+/data-processing
+/starter-kits

@@ -51,7 +51,7 @@ export const ProfileStore = signalStore(
         return;
       }
       data;
-      patchState(store, { edit: false, profile: data});
+      patchState(store, { edit: false, profile: {...data, myKits: store.profile()?.myKits, savedKits: store.profile()?.savedKits} });
     },
   }))
 );

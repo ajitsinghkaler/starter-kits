@@ -1,7 +1,6 @@
 import { Component, OnDestroy, ViewEncapsulation, inject } from '@angular/core';
 import { ProfileKitsComponent } from '../components/profile-kits.component';
 import { AuthService } from '../services/auth.service';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, filter, tap } from 'rxjs';
 import { ProfileStore } from '../stores/profile.store';
 import { AvatarModule } from 'primeng/avatar';
@@ -9,6 +8,7 @@ import { RouterLink } from '@angular/router';
 import { TabViewModule } from 'primeng/tabview';
 import { FormsModule } from '@angular/forms';
 import { SkeletonModule } from 'primeng/skeleton';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-profile',
@@ -63,25 +63,43 @@ import { SkeletonModule } from 'primeng/skeleton';
         (ngSubmit)="
           profileStore.updateProfile(
             profileForm,
-            authService.userState().user?.id
+            authService.userState.getValue().user?.id
           )
         "
       >
-        <input
-          name="full_name"
-          [ngModel]="profileStore.profile()?.full_name"
-          class="text-2xl mb-1 font-semibold focus-visible:outline-0"
-        />
+        <div class="flex items-center">
+          <label
+            for="full_name"
+            class="block text-sm text-gray-700 mr-2 font-semibold"
+            >Full Name</label
+          >
+          <input
+            pInputText
+            id="full_name"
+            name="full_name"
+            [ngModel]="profileStore.profile()?.full_name"
+            class="text-sm mb-2"
+          />
+        </div>
         <!-- <input
          name="email"
           [ngModel]="profileStore.profile()?.email"
           class="font-medium text-sm focus-visible:outline-0 w-full"
         /> -->
-        <input
-          name="website"
-          [ngModel]="profileStore.profile()?.website"
-          class="focus-visible:outline-0 font-medium w-full text-sm"
-        />
+        <div class="flex items-center">
+          <label
+            for="website"
+            class="block text-sm text-gray-700 mr-2 font-semibold"
+            >Website</label
+          >
+          <input
+            pInputText
+            id="website"
+            name="website"
+            [ngModel]="profileStore.profile()?.website"
+            class="text-sm mb-1"
+          />
+        </div>
         <div class="mt-4 flex mb-10">
           <button
             type="submit"
@@ -136,18 +154,19 @@ import { SkeletonModule } from 'primeng/skeleton';
     TabViewModule,
     FormsModule,
     SkeletonModule,
+    InputTextModule,
   ],
 })
 export class ProfileComponent implements OnDestroy {
   authService = inject(AuthService);
   profileStore = inject(ProfileStore);
-  user$ = toObservable(this.authService.userState).pipe(
+  user$ = this.authService.user$.pipe(
     distinctUntilChanged(),
     tap(() => {
       this.profileStore.startLoading();
     }),
-    filter((userState) => Boolean(userState)),
-    tap((userState) => this.profileStore.loadProfile(userState.user!.id))
+    filter((user) => Boolean(user.user)),
+    tap((user) => this.profileStore.loadProfile(user.user!.id))
   );
 
   userSubscription = this.user$.subscribe();

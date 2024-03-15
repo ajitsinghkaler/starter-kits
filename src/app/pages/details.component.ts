@@ -58,10 +58,10 @@ export class DetailsComponent implements OnInit {
   authServices = inject(AuthService);
   ngOnInit() {
     this.starterKitStore.loadStarterKit(this.starterKitId());
-    if (this.authServices.userState()?.user?.id) {
+    if (this.authServices.userState.getValue()?.user?.id) {
       this.starterKitStore.getBookMarkStatus(
         this.starterKitId(),
-        this.authServices.userState()?.user?.id || ''
+        this.authServices.userState.getValue()?.user?.id || ''
       );
     }
   }
