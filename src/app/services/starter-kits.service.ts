@@ -49,7 +49,7 @@ export class StarterKitsService {
     }
     let query = this.supabaseService.supabase
       .from('starter_kits')
-      .select(`*,   tags(*)`);
+      .select(`*,   tags(*)`, { count: 'exact'});
 
     Object.keys(filters).forEach((key) => {
       const filterKey = key as keyof Filters;
@@ -85,13 +85,13 @@ export class StarterKitsService {
       );
     }
 
-    const { data, error } = await query.returns<StarterKit[]>();
+    const { data, error, count } = await query.returns<StarterKit[]>();
 
     if (error) {
       console.error('Error fetching users:', error);
       return;
     }
-    return data;
+    return {data, count};
   }
 
   async createStarterKit(form: NgForm, file: FileList | null) {

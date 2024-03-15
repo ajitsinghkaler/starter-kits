@@ -58,7 +58,7 @@ import { CardSkeletonComponent } from './card-skeleton.component';
             </p>
             }}
           </div>
-          @if(store.starterKits().length> (store.filters().page||1)*24){
+          @if(store.starterKitsCount()> (store.filters().page||1)*24){
           <div class="w-full flex justify-center mt-8">
             <button
               (click)="loadMore()"

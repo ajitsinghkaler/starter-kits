@@ -10,12 +10,14 @@ import { Tag } from '../models/tag';
 type StaterKitsState = {
   starterKits: StarterKit[];
   isLoading: boolean;
+  starterKitsCount: number;
   isError: boolean;
   filters: Partial<Filters>;
 };
 
 const initialState: StaterKitsState = {
   starterKits: [],
+  starterKitsCount: 0,
   isLoading: false,
   isError: false,
   filters: {},
@@ -35,7 +37,11 @@ export const StarterKitsStore = signalStore(
             tapResponse({
               next: (starterKits) =>
                 patchState(store, {
-                  starterKits: [...store.starterKits(), ...(starterKits || [])],
+                  starterKits: [
+                    ...store.starterKits(),
+                    ...(starterKits?.data || []),
+                  ],
+                  starterKitsCount: starterKits?.count || 0,
                 }),
               error: () => patchState(store, { isError: true }),
               finalize: () => patchState(store, { isLoading: false }),
