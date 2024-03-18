@@ -71,7 +71,9 @@ export const StarterKitsStore = signalStore(
         return;
       }
       patchState(store, {
-        starterKits: data.map((item) => item.starter_kits),
+        starterKits: data.flatMap(item => item.starter_kits)
+                               .filter((starterKit, index, array) =>
+                                       array.findIndex(kit => kit.id === starterKit.id) === index),
         isLoading: false,
       });
     },

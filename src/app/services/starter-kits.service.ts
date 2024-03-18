@@ -203,7 +203,7 @@ export class StarterKitsService {
   async getStarterKitsTags(tags: number[], starterKitId: number, limit = 8) {
     return this.supabaseService.supabase
       .from('starter_kit_tags')
-      .select(`starter_kits(*, tags(*))`)
+      .select(`starter_kits(id,name,kit_image,short_description, tags(*))`)
       .neq('starter_kit', starterKitId.toString())
       .filter('tags', 'in', `(${tags.join(',')})`)
       .limit(limit)

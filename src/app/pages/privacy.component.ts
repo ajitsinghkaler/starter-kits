@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
         <section class="mt-6 p-4">
           <h2 class="text-xl font-semibold">1. Introduction</h2>
           <p class="mt-2">
-            At [name], managed by Ajit Singh, we are committed to protecting
+            At StarterkitHub, managed by Ajit Singh, we are committed to protecting
             your privacy. This Privacy Policy outlines the types of personal
             information we collect, how we use, share, and protect that
             information, and your rights regarding your personal information.

@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
       <section class="mt-6  p-4">
         <h2 class="text-xl font-semibold">1. Introduction</h2>
         <p class="mt-2 ">
-          Welcome to [name]! These Terms of Service ("Terms") , governed by Ajit Singh, oversee your use of [Name]'s
+          Welcome to StarterkitHub! These Terms of Service ("Terms") , governed by Ajit Singh, oversee your use of StarterkitHub's
           services, including our content, and any software provided on or in connection with the services
           (collectively, the "Service"). By accessing or using our Service, you agree to be bound by these Terms and our
           Privacy Policy.
@@ -33,7 +33,7 @@ import { Component } from '@angular/core';
         <h2 class="mt-6 text-xl font-semibold">4. Intellectual Property Rights</h2>
         <p class="mt-2 ">
           All intellectual property rights in the Service, including design, text, graphics, and other content, belong
-          to [name] or its licensors. Your use of the Service does not grant you any rights to our intellectual
+          to StarterkitHub or its licensors. Your use of the Service does not grant you any rights to our intellectual
           property except for the limited rights of use granted under these Terms.
         </p>
 
@@ -53,14 +53,14 @@ import { Component } from '@angular/core';
 
         <h2 class="mt-6 text-xl font-semibold">7. Disclaimer and Limitation of Liability</h2>
         <p class="mt-2 ">
-          The Service is provided on an "AS IS" and "AS AVAILABLE" basis. [name] makes no representations or warranties
+          The Service is provided on an "AS IS" and "AS AVAILABLE" basis. StarterkitHub makes no representations or warranties
           of any kind, express or implied, as to the operation of their services, or the information, content, or
           materials included therein. You expressly agree that your use of the Service is at your sole risk.
         </p>
 
         <h2 class="mt-6 text-xl font-semibold">8. Governing Law</h2>
         <p class="mt-2 ">
-          These Terms shall be governed by the laws of the country where [name] is headquartered, without regard to its
+          These Terms shall be governed by the laws of the country where StarterkitHub is headquartered, without regard to its
           conflict of law provisions.
         </p>
 
