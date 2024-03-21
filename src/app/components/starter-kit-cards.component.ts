@@ -16,6 +16,7 @@ import { NgOptimizedImage } from '@angular/common';
       <img
         class=" object-cover"
         fill
+        priority
         alt="{{ starterKit().name }} image"
         [ngSrc]="starterKit().kit_image || 'assets/500.png'"
         routerLink="/details/{{ starterKit().id }}"
